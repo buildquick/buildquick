@@ -3,6 +3,7 @@ import * as CSS from 'csstype';
 
 // Adapted from Builder SDK's GetContentOptions
 export type ContentApiV2Options = {
+  apiKey: string;
   /**
    * User attribute key value pairs to be used for targeting
    * https://www.builder.io/c/docs/custom-targeting-attributes
