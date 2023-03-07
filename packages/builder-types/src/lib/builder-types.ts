@@ -182,7 +182,7 @@ type InputBase = {
   broadcast: boolean;
   bubble: boolean;
   copyOnAdd: boolean;
-  defaultValue: Field;
+  defaultValue?: Field;
   disallowRemove: boolean;
   helperText: string;
   hidden: boolean;
@@ -225,7 +225,9 @@ export type DataSource = {
   };
 };
 
-export type ContentApiV2Item = {
+type PublishedStatus = 'published' | 'draft' | 'archived';
+
+type ContentApiV2ItemBase<Published extends PublishedStatus> = {
   '@liveSyncEnabled'?: boolean;
   '@originId'?: string;
   '@originModelId'?: string;
@@ -233,8 +235,7 @@ export type ContentApiV2Item = {
   createdBy: string;
   createdDate: number;
   data: ContentApiV2ItemData;
-  firstPublished: number;
-  folders: string[];
+  folders?: string[];
   id: string;
   lastUpdated: number;
   lastUpdatedBy: string;
@@ -242,30 +243,41 @@ export type ContentApiV2Item = {
   meta: {
     breakpoints?: { medium: number; small: number };
     componentsUsed?: { [name: string]: number };
-    hasLinks: boolean;
+    hasLinks?: boolean;
     kind: 'page' | 'component' | 'data';
     lastPreviewUrl?: string;
-    needsHydration: boolean;
+    needsHydration?: boolean;
     originalContentId?: string;
-    // TODO: When is this not null?
-    winningTest: null;
+    // TODO: When is this not null or undefined?
+    winningTest?: null;
     dataSources?: DataSource[];
   };
   modelId: string;
   name: string;
-  published: 'draft' | 'published' | 'archived';
+  published: Published;
   query: Query[];
   rev: string;
-  screenshot: string;
   testRatio: number;
   variations: {
-    [contentId: string]: ContentApiV2Variant;
+    [contentId: string]: ContentApiV2Variant<Published>;
   };
 };
 
-export type ContentApiV2Variant = Omit<
-  ContentApiV2Item,
+export type ContentApiV2Item<Published extends PublishedStatus> =
+  Published extends 'published'
+    ? ContentApiV2ItemBase<Published> & {
+        firstPublished: number;
+        screenshot: string;
+      }
+    : ContentApiV2ItemBase<Published> & {
+        firstPublished?: number;
+        screenshot?: string;
+      };
+
+export type ContentApiV2Variant<Published extends PublishedStatus> = Omit<
+  ContentApiV2Item<Published>,
   | 'createdBy'
+  | 'data'
   | 'meta'
   | 'query'
   | 'rev'
@@ -278,13 +290,16 @@ export type ContentApiV2Variant = Omit<
   | 'screenshot'
   | 'variations'
 > & {
+  data: Omit<ContentApiV2ItemData, 'url'>;
   meta: Record<string, never>;
 };
 
 type DeviceSize = 'large' | 'medium' | 'small';
 
 type ResponsiveStyles = {
-  [size in DeviceSize]: CSS.Properties;
+  [Size in DeviceSize]?: {
+    [Property in string & CSS.Properties]: string;
+  };
 };
 
 type Action = {
@@ -297,10 +312,12 @@ type Action = {
 
 type ElementBase = {
   '@type': '@builder.io/sdk:Element';
-  bindings: {
+  bindings?: {
     [binding: string | 'show' | 'hide']: string;
   };
+  id: string;
   responsiveStyles: ResponsiveStyles;
+  tagName?: string;
 };
 
 export interface ElementV1 extends ElementBase {
@@ -309,10 +326,23 @@ export interface ElementV1 extends ElementBase {
   };
 }
 
-export interface ElementV2 extends ElementBase {
+type EventActionTypes = 'click';
+
+type EventAction = {
+  '@type': '@builder.io/core:Action';
+  action: '@builder.io:customCode';
+  options: { code: string };
+};
+
+export interface ElementV2Base extends ElementBase {
   '@version': 2;
-  children?: Block[];
+  actions?: { [EventActionType in EventActionTypes]: string };
   class?: string;
+  code?: {
+    actions: {
+      [EventActionType in EventActionTypes]: string;
+    };
+  };
   layerName?: string;
   meta?: {
     bindingActions?: {
@@ -322,11 +352,25 @@ export interface ElementV2 extends ElementBase {
         };
       };
     };
+    eventActions?: {
+      [EventActionType in EventActionTypes]: EventAction[];
+    };
     previousId?: string;
   };
 }
 
-export interface Symbol extends ElementV2 {
+export interface ElementV2WithChildren extends ElementV2Base {
+  children: Block[];
+}
+
+export interface ElementV2WithoutChildren extends ElementV2Base {
+  component: {
+    name: string;
+    options: Record<string, Field>;
+  };
+}
+
+export interface ElementV2Symbol extends ElementV2Base {
   component: {
     name: string;
     options: {
@@ -334,7 +378,7 @@ export interface Symbol extends ElementV2 {
       inheritState: boolean;
       renderToLiquid: boolean;
       symbol: {
-        content?: ContentApiV2Item;
+        content?: ContentItem;
         // TODO: check against symbol instance with no inputs
         data: Record<string, Field>;
         entry: string;
@@ -345,7 +389,7 @@ export interface Symbol extends ElementV2 {
   };
 }
 
-export interface CustomComponent extends ElementV2 {
+export interface ElementV2CustomComponent extends ElementV2Base {
   component: {
     name: string;
     options: Record<string, Field>;
@@ -357,12 +401,28 @@ export type Reference = {
   '@type': '@builder.io/core:Reference';
   id: string;
   model: string;
-  value?: ContentApiV2Item;
+  value?: ContentItem;
 };
 
-type Field = string | string[] | number | Reference | null | object;
+interface ComplexField<T> {
+  [key: string]: T;
+}
+type Field =
+  | string
+  | string[]
+  | number
+  | boolean
+  | null
+  | Reference
+  | ComplexField<Field>
+  | ComplexField<Field>[];
 
-type Block = ElementV1 | ElementV2;
+type Block =
+  | ElementV1
+  | ElementV2WithChildren
+  | ElementV2WithoutChildren
+  | ElementV2Symbol
+  | ElementV2CustomComponent;
 
 type Location = {
   pathname: string;
@@ -375,24 +435,34 @@ type State =
       deviceSize: DeviceSize;
       location: Location;
     }
-  | JSON;
+  | Record<string, Field>;
 
-type ContentApiV2ItemData =
-  | {
-      blocks: Block[];
-      inputs: Input[];
-      jsCode?: string;
-      state: State;
-      themeId: false | string;
-      tsCode: string;
-      url: string | string[];
-    }
-  | {
-      [modelField: string]: Field;
-    };
+type CustomFont = {
+  family: string;
+  isUserFont: boolean;
+};
 
-export type ContentItem = ContentApiV2Item;
+type ContentApiV2ItemData = {
+  blocks?: Block[];
+  customFonts?: CustomFont[];
+  httpRequests?: {
+    [key: string]: string;
+  };
+  inputs?: Input[];
+  jsCode?: string;
+  state?: State;
+  themeId?: false | string;
+  tsCode?: string;
+  url: string | string[];
+} & {
+  [modelField: string]: Field;
+};
+
+export type ContentItem =
+  | ContentApiV2Item<'published'>
+  | ContentApiV2Item<'draft'>
+  | ContentApiV2Item<'archived'>;
 
 export type ContentApiV2Response = {
-  results: ContentApiV2Item[];
+  results: ContentItem[];
 };
