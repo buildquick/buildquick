@@ -225,9 +225,7 @@ export type DataSource = {
   };
 };
 
-type PublishedStatus = 'published' | 'draft' | 'archived';
-
-type ContentApiV2ItemBase<Published extends PublishedStatus> = {
+export type ContentApiV2Item = {
   '@liveSyncEnabled'?: boolean;
   '@originId'?: string;
   '@originModelId'?: string;
@@ -235,6 +233,7 @@ type ContentApiV2ItemBase<Published extends PublishedStatus> = {
   createdBy: string;
   createdDate: number;
   data: ContentApiV2ItemData;
+  firstPublished?: number;
   folders?: string[];
   id: string;
   lastUpdated: number;
@@ -254,28 +253,18 @@ type ContentApiV2ItemBase<Published extends PublishedStatus> = {
   };
   modelId: string;
   name: string;
-  published: Published;
+  published: 'published' | 'draft' | 'archived';
   query: Query[];
   rev: string;
+  screenshot?: string;
   testRatio: number;
   variations: {
-    [contentId: string]: ContentApiV2Variant<Published>;
+    [contentId: string]: ContentApiV2Variant;
   };
 };
 
-export type ContentApiV2Item<Published extends PublishedStatus> =
-  Published extends 'published'
-    ? ContentApiV2ItemBase<Published> & {
-        firstPublished: number;
-        screenshot: string;
-      }
-    : ContentApiV2ItemBase<Published> & {
-        firstPublished?: number;
-        screenshot?: string;
-      };
-
-export type ContentApiV2Variant<Published extends PublishedStatus> = Omit<
-  ContentApiV2Item<Published>,
+export type ContentApiV2Variant = Omit<
+  ContentApiV2Item,
   | 'createdBy'
   | 'data'
   | 'meta'
@@ -458,10 +447,7 @@ type ContentApiV2ItemData = {
   [modelField: string]: Field;
 };
 
-export type ContentItem =
-  | ContentApiV2Item<'published'>
-  | ContentApiV2Item<'draft'>
-  | ContentApiV2Item<'archived'>;
+export type ContentItem = ContentApiV2Item;
 
 export type ContentApiV2Response = {
   results: ContentItem[];
