@@ -223,16 +223,17 @@ export type ContentApiV2Item = {
   id: string;
   lastUpdated: number;
   lastUpdatedBy: string;
-  // Need to compare to CMS data model
+  // TODO: Need to compare to CMS data model.
   meta: {
     breakpoints?: { medium: number; small: number };
     componentsUsed?: { [name: string]: number };
     hasLinks: boolean;
     kind: 'page' | 'component' | 'data';
-    lastPreviewUrl: string;
+    lastPreviewUrl?: string;
     needsHydration: boolean;
-    originalContentId: string;
-    // winningTest: null
+    originalContentId?: string;
+    // TODO: When is this not null?
+    winningTest: null;
   };
   modelId: string;
   name: string;
@@ -241,7 +242,27 @@ export type ContentApiV2Item = {
   rev: string;
   screenshot: string;
   testRatio: number;
-  // variations: ???
+  variations: {
+    [contentId: string]: ContentApiV2Variant;
+  };
+};
+
+export type ContentApiV2Variant = Omit<
+  ContentApiV2Item,
+  | 'createdBy'
+  | 'meta'
+  | 'query'
+  | 'rev'
+  | 'published'
+  | 'firstPublished'
+  | 'folders'
+  | 'lastUpdated'
+  | 'lastUpdatedBy'
+  | 'modelId'
+  | 'screenshot'
+  | 'variations'
+> & {
+  meta: Record<string, never>;
 };
 
 type DeviceSize = 'large' | 'medium' | 'small';
