@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "@builder.io/react": "^2.0.14",
+    "@swc-node/register": "^1.6.2",
     "@swc/helpers": "~0.4.11"
   },
   "devDependencies": {
