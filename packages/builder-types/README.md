@@ -1,7 +1,3 @@
 # builder-types
 
-This library was generated with [Nx](https://nx.dev).
-
-## Building
-
-Run `nx build builder-types` to build the library.
+A library with types for modeling JSON from Builder.io's content API.

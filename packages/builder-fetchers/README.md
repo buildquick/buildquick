@@ -1,11 +1,7 @@
 # builder-fetchers
 
-This library was generated with [Nx](https://nx.dev).
+A library with useful fetching functions for interacting with Builder.io's content API:
 
-## Building
-
-Run `nx build builder-fetchers` to build the library.
-
-## Running unit tests
-
-Run `nx test builder-fetchers` to execute the unit tests via [Jest](https://jestjs.io).
+- `getOne`
+- `getSome`
+- `getAll`
