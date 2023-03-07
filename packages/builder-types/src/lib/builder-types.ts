@@ -237,7 +237,7 @@ export type ContentApiV2Item = {
   };
   modelId: string;
   name: string;
-  published: 'draft' | 'published'; // "archived"
+  published: 'draft' | 'published' | 'archived';
   query: Query[];
   rev: string;
   screenshot: string;
