@@ -12,16 +12,16 @@ type ValidateShape<T, Shape> = T extends Shape
     : never
   : never;
 
-type Transform<T> = (results: ContentItem[]) => Promise<T>;
+type Transform<T> = (results: ContentItem[] | null) => Promise<T | null>;
 
 type ContentFetcherOptions<T> = ContentApiV2Options & {
+  model: string;
   transform?: Transform<T>;
   maxBackoff?: number;
   maxTries?: number;
 };
 
 type ContentFetcher<T, O = ContentFetcherOptions<T>> = (
-  modelName: string,
   options: O
 ) => Promise<T | null>;
 
@@ -39,20 +39,29 @@ type GetAllOptions = Omit<
 // Max limit supported by Builder content API is 100.
 const BUILDER_MAX_LIMIT = 100;
 
-const createContentApiUrl = <T>(
-  modelName: string,
-  options: ValidateShape<T, ContentApiV2Options>
+const createContentApiUrl = (
+  options: ContentApiV2Options & Pick<ContentFetcherOptions<never>, 'model'>
 ) => {
-  const query = QueryString.stringifyDeep(options);
-  const url = `https://cdn.builder.io/api/v2/content/${modelName}?${query}`;
+  const apiOptions = getApiOptions(options);
+  const query = QueryString.stringifyDeep(apiOptions);
+  const url = `https://cdn.builder.io/api/v2/content/${options.model}?${query}`;
 
   return url;
 };
 
-const getFinalOptions = (
+const isString = (str: unknown): str is string =>
+  Object.prototype.toString.call(str) === '[object String]';
+
+const getApiOptions = <T>(
   options: Record<string, unknown>
-): ContentApiV2Options => {
+): ValidateShape<T, ContentApiV2Options> => {
+  type RequiredProperties = keyof typeof requiredProperties;
+
+  // NOTE: Keep this in sync with the content API options type.
+  const requiredProperties = { apiKey: isString };
+  // NOTE: Keep this in sync with the content API options type.
   const expectedProperties = [
+    ...Object.keys(requiredProperties),
     'userAttributes',
     'url',
     'includeUrl',
@@ -80,9 +89,24 @@ const getFinalOptions = (
     'noTraverse',
   ];
 
+  const doesOptionsHaveRequiredProperties = (
+    options: Record<string, unknown>
+  ): options is Pick<ContentApiV2Options, RequiredProperties> &
+    Record<string, unknown> =>
+    (Object.keys(requiredProperties) as RequiredProperties[]).every(
+      (prop) =>
+        Object.keys(options).includes(prop) &&
+        requiredProperties[prop](options[prop])
+    );
+
   const isValidOptionsProp = (
     prop: string
   ): prop is keyof ContentApiV2Options => expectedProperties.includes(prop);
+
+  if (!doesOptionsHaveRequiredProperties(options))
+    throw new Error(
+      'Required props missing from options or have invalid values. Check your content API options parameter.'
+    );
 
   const validOptions = Object.keys(options).reduce<ContentApiV2Options>(
     (acc, prop) => {
@@ -94,8 +118,8 @@ const getFinalOptions = (
 
       return acc;
     },
-    {}
-  );
+    { apiKey: options.apiKey }
+  ) as ValidateShape<T, ContentApiV2Options>;
 
   return {
     // Include shared content API options here.
@@ -144,27 +168,24 @@ const backoff = async (
   }
 };
 
-const get = async <T>(
-  modelName: string,
-  options: ValidateShape<T, ContentApiV2Options>
-) => {
-  const finalOptions = getFinalOptions(options);
-  const url = createContentApiUrl(modelName, finalOptions);
+const get: ContentFetcher<
+  ContentApiV2Item[],
+  ContentFetcherOptions<ContentApiV2Item | ContentApiV2Item[]>
+> = async (options) => {
+  const url = createContentApiUrl(options);
   const res = await fetch(url);
   const data: ContentApiV2Response = await res.json();
 
   return data?.results || null;
 };
 
-export const getOne: ContentFetcher<ContentApiV2Item> = async (
-  modelName,
-  options
-) => {
-  const defaultTransform = async (results: ContentApiV2Item[]) => results[0];
+export const getOne: ContentFetcher<ContentApiV2Item> = async (options) => {
+  const defaultTransform: Transform<ContentApiV2Item> = async (results) =>
+    results?.[0] ?? null;
   const transform = options.transform ?? defaultTransform;
   let result: ContentApiV2Item | null = null;
   const execute = async () => {
-    const results = await get(modelName, getFinalOptions(options));
+    const results = await get(options);
 
     result = await transform(results);
   };
@@ -174,15 +195,13 @@ export const getOne: ContentFetcher<ContentApiV2Item> = async (
   return result;
 };
 
-export const getSome: ContentFetcher<ContentApiV2Item[]> = async (
-  modelName,
-  options
-) => {
-  const defaultTransform = async (results: ContentApiV2Item[]) => results;
+export const getSome: ContentFetcher<ContentApiV2Item[]> = async (options) => {
+  const defaultTransform: Transform<ContentApiV2Item[]> = async (results) =>
+    results;
   const transform = options.transform ?? defaultTransform;
-  let results: ContentApiV2Item[] = [];
+  let results: ContentApiV2Item[] | null = null;
   const execute = async () => {
-    results = await get(modelName, getFinalOptions(options));
+    results = await get(options);
     results = await transform(results);
   };
 
@@ -192,7 +211,6 @@ export const getSome: ContentFetcher<ContentApiV2Item[]> = async (
 };
 
 export const getAll: ContentFetcher<ContentApiV2Item[], GetAllOptions> = async (
-  modelName,
   options
 ) => {
   const pageLimit = options.pageLimit || BUILDER_MAX_LIMIT;
@@ -200,8 +218,8 @@ export const getAll: ContentFetcher<ContentApiV2Item[], GetAllOptions> = async (
     results;
   const pageTransform = options.pageTransform || defaultPageTransform;
   let offset = 0;
-  let nextItems: Promise<ContentApiV2Item[]>;
-  let allItems: (typeof nextItems)[] | null = [];
+  let nextItems: Promise<ContentApiV2Item[] | null>;
+  let allItems: (typeof nextItems)[] = [];
   let page = 0;
   let fetchContent;
 
@@ -215,7 +233,7 @@ export const getAll: ContentFetcher<ContentApiV2Item[], GetAllOptions> = async (
         },
         options
       );
-      const results = await get(modelName, getFinalOptions(batchOptions));
+      const results = await get(batchOptions);
 
       // Neither of these should ever happen.
       if (!results)
@@ -235,5 +253,7 @@ export const getAll: ContentFetcher<ContentApiV2Item[], GetAllOptions> = async (
   } while (allItems.length === pageLimit);
 
   // Ensure that all transformations have been applied.
-  return allItems.length ? (await Promise.all(allItems)).flat() : null;
+  return (await Promise.all(allItems))
+    .flat()
+    .filter<ContentApiV2Item>((item): item is ContentApiV2Item => !!item);
 };
