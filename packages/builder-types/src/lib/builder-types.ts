@@ -153,28 +153,27 @@ export type ContentApiV2Options = {
   noTraverse?: boolean;
 };
 
-type BuiltInQueryTypes =
-  | {
-      '@type': '@builder.io/core:Query';
-      operator: 'is';
+type MakeQueryType<T> = {
+  '@type': '@builder.io/core:Query';
+  operator: 'is';
+} & T;
+
+type BuiltInQuery =
+  | MakeQueryType<{
       property: 'urlPath';
       value: string | string[];
-    }
-  | {
-      '@type': '@builder.io/core:Query';
-      operator: 'is';
+    }>
+  | MakeQueryType<{
       property: 'device' | 'host';
       value: string;
-    };
+    }>;
 
-type Query =
-  | BuiltInQueryTypes
-  | {
-      '@type': '@builder.io/core:Query';
-      operator: 'is';
-      property: string;
-      value: Field;
-    };
+type CustomQuery = MakeQueryType<{
+  property: string;
+  value: Field;
+}>;
+
+type Query = BuiltInQuery | CustomQuery;
 
 type InputBase = {
   '@type': '@builder.io/core:Field';
@@ -210,6 +209,22 @@ interface InputFile extends InputBase {
 
 type Input = InputFile | InputBase;
 
+export type DataSource = {
+  dataPluginName: string;
+  propertyName: string;
+  resourceName: string;
+  resourceId: string;
+  options: {
+    entry?: string;
+    limit: number | null;
+    omit: string;
+    orderBy: string;
+    orderType: string;
+    query: CustomQuery[];
+    single: boolean;
+  };
+};
+
 export type ContentApiV2Item = {
   '@liveSyncEnabled'?: boolean;
   '@originId'?: string;
@@ -234,6 +249,7 @@ export type ContentApiV2Item = {
     originalContentId?: string;
     // TODO: When is this not null?
     winningTest: null;
+    dataSources?: DataSource[];
   };
   modelId: string;
   name: string;
