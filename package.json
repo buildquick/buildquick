@@ -5,6 +5,7 @@
   "scripts": {},
   "private": true,
   "dependencies": {
+    "@builder.io/sdk": "^1.1.33",
     "@swc-node/register": "^1.6.2",
     "@swc/helpers": "~0.4.11"
   },
