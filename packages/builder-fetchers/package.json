@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "type": "module",
   "dependencies": {
-    "@buildquick/builder-types": "^0.0.1"
+    "@buildquick/builder-types": "^0.0.2"
   },
   "peerDependencies": {
     "@builder.io/core": "^1.1.25"
