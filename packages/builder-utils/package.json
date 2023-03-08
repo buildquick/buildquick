@@ -1,0 +1,9 @@
+{
+  "name": "@buildquick/builder-utils",
+  "version": "0.0.6",
+  "type": "module",
+  "main": "./index.js",
+  "dependencies": {
+    "@buildquick/builder-fetchers": "^0.0.6"
+  }
+}
