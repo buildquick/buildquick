@@ -227,14 +227,18 @@ export type DataSource = {
   };
 };
 
-export type ContentApiV2Item = {
+export type ContentApiV2Item<
+  D = {
+    [modelField: string]: Field;
+  }
+> = {
   '@liveSyncEnabled'?: boolean;
   '@originId'?: string;
   '@originModelId'?: string;
   '@originOrgId'?: string;
   createdBy: string;
   createdDate: number;
-  data: ContentApiV2ItemData;
+  data: ContentApiV2ItemData<D>;
   firstPublished?: number;
   folders?: string[];
   id: string;
@@ -433,7 +437,11 @@ type CustomFont = {
   isUserFont: boolean;
 };
 
-type ContentApiV2ItemData = {
+type ContentApiV2ItemData<
+  D = {
+    [modelField: string]: Field;
+  }
+> = {
   blocks?: Block[];
   customFonts?: CustomFont[];
   httpRequests?: {
@@ -445,9 +453,7 @@ type ContentApiV2ItemData = {
   themeId?: false | string;
   tsCode?: string;
   url: string | string[];
-} & {
-  [modelField: string]: Field;
-};
+} & D;
 
 export type ContentItem = ContentApiV2Item;
 

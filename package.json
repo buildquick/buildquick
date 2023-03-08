@@ -2,7 +2,9 @@
   "name": "@buildquick",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "prepare": "husky install"
+  },
   "private": true,
   "dependencies": {
     "@builder.io/sdk": "^1.1.33",
@@ -11,6 +13,8 @@
     "csstype": "^3.1.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.0.0",
+    "@commitlint/config-conventional": "^17.0.0",
     "@jscutlery/semver": "^2.30.1",
     "@nrwl/eslint-plugin-nx": "15.8.5",
     "@nrwl/js": "15.8.5",
@@ -26,6 +30,7 @@
     "@vitest/ui": "^0.25.8",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
+    "husky": "^8.0.0",
     "jsdom": "~20.0.3",
     "msw": "^1.1.0",
     "nx": "15.8.5",
