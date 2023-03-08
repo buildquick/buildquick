@@ -152,6 +152,7 @@ export type ContentApiV2Options = {
    */
   static?: boolean;
   noTraverse?: boolean;
+  noTargeting?: boolean;
 };
 
 type MakeQueryType<T> = {

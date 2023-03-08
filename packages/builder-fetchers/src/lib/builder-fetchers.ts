@@ -12,7 +12,7 @@ type ValidateShape<T, Shape> = T extends Shape
     : never
   : never;
 
-type Transform<T> = (results: ContentItem[] | null) => Promise<T | null>;
+type Transform<T> = (results: ContentItem[]) => Promise<T>;
 
 type ContentFetcherOptions<T> = ContentApiV2Options & {
   model: string;
@@ -23,7 +23,7 @@ type ContentFetcherOptions<T> = ContentApiV2Options & {
 
 type ContentFetcher<T, O = ContentFetcherOptions<T>> = (
   options: O
-) => Promise<T | null>;
+) => Promise<T>;
 
 type GetAllOptions = Omit<
   ContentFetcherOptions<ContentApiV2Item[]>,
@@ -89,24 +89,34 @@ const getApiOptions = <T>(
     'noTraverse',
   ];
 
+  const isValidRequiredProp = (prop: RequiredProperties) =>
+    Object.keys(options).includes(prop) &&
+    requiredProperties[prop](options[prop]);
+
   const doesOptionsHaveRequiredProperties = (
     options: Record<string, unknown>
   ): options is Pick<ContentApiV2Options, RequiredProperties> &
     Record<string, unknown> =>
     (Object.keys(requiredProperties) as RequiredProperties[]).every(
-      (prop) =>
-        Object.keys(options).includes(prop) &&
-        requiredProperties[prop](options[prop])
+      isValidRequiredProp
     );
 
   const isValidOptionsProp = (
     prop: string
   ): prop is keyof ContentApiV2Options => expectedProperties.includes(prop);
 
-  if (!doesOptionsHaveRequiredProperties(options))
-    throw new Error(
-      'Required props missing from options or have invalid values. Check your content API options parameter.'
+  if (!doesOptionsHaveRequiredProperties(options)) {
+    const invalidRequiredProps = Object.keys(requiredProperties).filter(
+      (prop) => !isValidOptionsProp(prop)
     );
+    const msg = invalidRequiredProps
+      .map((prop) => `${prop} (value: ${options[prop]})`)
+      .join(', ');
+
+    throw new Error(
+      `Required props missing from options or have invalid values: ${msg}. Check your content API options parameter.`
+    );
+  }
 
   const validOptions = Object.keys(options).reduce<ContentApiV2Options>(
     (acc, prop) => {
@@ -129,8 +139,8 @@ const getApiOptions = <T>(
   };
 };
 
-const backoff = async (
-  callback: () => Promise<void>,
+const backoff = async <T>(
+  callback: () => Promise<T>,
   maxBackoff = 32000,
   maxTries = 6
 ) => {
@@ -143,10 +153,10 @@ const backoff = async (
 
     try {
       // Attempt to execute the callback.
-      await callback();
+      const result = await callback();
 
-      // Break on success.
-      break;
+      // Return on success.
+      return result;
     } catch (err) {
       // If we've thrown an error on the last iteration, don't ignore, re-throw.
       if (count + 1 >= maxTries) {
@@ -166,6 +176,9 @@ const backoff = async (
       );
     }
   }
+
+  // We should never reach here.
+  throw new Error('Unidentified error during backoff.');
 };
 
 const get: ContentFetcher<
@@ -181,33 +194,28 @@ const get: ContentFetcher<
 
 export const getOne: ContentFetcher<ContentApiV2Item> = async (options) => {
   const defaultTransform: Transform<ContentApiV2Item> = async (results) =>
-    results?.[0] ?? null;
+    results[0];
   const transform = options.transform ?? defaultTransform;
-  let result: ContentApiV2Item | null = null;
   const execute = async () => {
     const results = await get(options);
 
-    result = await transform(results);
+    return await transform(results);
   };
 
-  await backoff(execute, options.maxBackoff, options.maxTries);
-
-  return result;
+  return await backoff(execute, options.maxBackoff, options.maxTries);
 };
 
 export const getSome: ContentFetcher<ContentApiV2Item[]> = async (options) => {
   const defaultTransform: Transform<ContentApiV2Item[]> = async (results) =>
     results;
   const transform = options.transform ?? defaultTransform;
-  let results: ContentApiV2Item[] | null = null;
   const execute = async () => {
-    results = await get(options);
-    results = await transform(results);
+    const results = await get(options);
+
+    return await transform(results);
   };
 
-  await backoff(execute, options.maxBackoff, options.maxTries);
-
-  return results;
+  return await backoff(execute, options.maxBackoff, options.maxTries);
 };
 
 export const getAll: ContentFetcher<ContentApiV2Item[], GetAllOptions> = async (
