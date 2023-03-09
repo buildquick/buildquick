@@ -19,7 +19,10 @@
         "packages/builder-fetchers/src/index.ts"
       ],
       "@buildquick/builder-types": ["packages/builder-types/src/index.ts"],
-      "@buildquick/builder-utils": ["packages/builder-utils/src/index.ts"]
+      "@buildquick/builder-utils": ["packages/builder-utils/src/index.ts"],
+      "@buildquick/builder-utils-react": [
+        "packages/builder-utils-react/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
