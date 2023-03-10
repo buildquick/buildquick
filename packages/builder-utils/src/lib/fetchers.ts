@@ -4,6 +4,7 @@ import {
   ContentApiV2Response,
   ContentItem,
 } from '@buildquick/builder-types';
+import { backoff } from './utils';
 import { QueryString } from '@builder.io/sdk/dist/src/classes/query-string.class';
 
 type ValidateShape<T, Shape> = T extends Shape
@@ -39,7 +40,7 @@ type GetAllOptions = Omit<
 // Max limit supported by Builder content API is 100.
 const BUILDER_MAX_LIMIT = 100;
 
-const createContentApiUrl = (
+export const createContentApiV2Url = (
   options: ContentApiV2Options & Pick<ContentFetcherOptions<never>, 'model'>
 ) => {
   const apiOptions = getApiOptions(options);
@@ -139,53 +140,11 @@ const getApiOptions = <T>(
   };
 };
 
-const backoff = async <T>(
-  callback: () => Promise<T>,
-  maxBackoff = 32000,
-  maxTries = 6
-) => {
-  let jitter: number;
-  let retryDelay: number;
-
-  for (let count = 0; count < maxTries; count++) {
-    jitter = Math.ceil(Math.random() * 1000);
-    retryDelay = Math.min(2 ^ (count + jitter), maxBackoff);
-
-    try {
-      // Attempt to execute the callback.
-      const result = await callback();
-
-      // Return on success.
-      return result;
-    } catch (err) {
-      // If we've thrown an error on the last iteration, don't ignore, re-throw.
-      if (count + 1 >= maxTries) {
-        throw new Error(
-          `Attempt ${
-            count + 1
-          } of ${maxTries} failed. Max tries has been reached.\n\n${err}`
-        );
-      }
-      // Otherwise, ignore the error, introduce a delay, and loop over again
-      // to retry the fetch.
-      if (process.env['DEBUG'])
-        console.log(`Attempt ${count + 1} of ${maxTries} failed. Retrying...`);
-
-      await new Promise<void>((resolve) =>
-        setTimeout(() => resolve(), retryDelay)
-      );
-    }
-  }
-
-  // We should never reach here.
-  throw new Error('Unidentified error during backoff.');
-};
-
 const get: ContentFetcher<
   ContentApiV2Item[],
   ContentFetcherOptions<ContentApiV2Item | ContentApiV2Item[]>
 > = async (options) => {
-  const url = createContentApiUrl(options);
+  const url = createContentApiV2Url(options);
   const res = await fetch(url);
   const data: ContentApiV2Response = await res.json();
 
