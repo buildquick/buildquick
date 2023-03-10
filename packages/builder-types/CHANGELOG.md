@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.1.1](https://github.com/buildquick/buildquick/compare/builder-types-0.1.0...builder-types-0.1.1) (2023-03-10)
+
 ## [0.1.0](https://github.com/buildquick/buildquick/compare/builder-types-0.0.7...builder-types-0.1.0) (2023-03-10)
 
 
