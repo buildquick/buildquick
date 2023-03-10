@@ -37,6 +37,12 @@
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/packages/builder-utils-react"
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
+      }
     }
   }
 }
