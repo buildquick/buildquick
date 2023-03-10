@@ -3,6 +3,11 @@ import { BuilderComponent as BuilderIoBuilderComponent } from '@builder.io/react
 import { BuilderComponentProps as BuilderIoBuilderComponentProps } from '@builder.io/react/dist/types/src/components/builder-component.component';
 import { BuilderContent } from '@builder.io/sdk/dist/src/types/content.d';
 import { ContentItem } from '@buildquick/builder-types';
+import {
+  waitForElement,
+  waitForElements,
+  waitForRef,
+} from '@buildquick/builder-utils';
 
 interface BuilderComponentProps
   extends Omit<BuilderIoBuilderComponentProps, 'content'> {
@@ -16,11 +21,20 @@ interface BuilderComponentProps
 export const BuilderComponent = forwardRef<
   BuilderIoBuilderComponent,
   BuilderComponentProps
->(({ content, ...props }, ref) => {
-  // TODO: Add shared context and state, if needed.
+>(({ content, context, ...props }, ref) => {
   return (
     <BuilderIoBuilderComponent
       content={content as unknown as BuilderContent}
+      context={{
+        buildquick: {
+          utils: {
+            waitForElement,
+            waitForElements,
+            waitForRef,
+          },
+        },
+        ...context,
+      }}
       ref={ref}
       {...props}
     />
