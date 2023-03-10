@@ -15,9 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@buildquick/builder-fetchers": [
-        "packages/builder-fetchers/src/index.ts"
-      ],
       "@buildquick/builder-types": ["packages/builder-types/src/index.ts"],
       "@buildquick/builder-utils": ["packages/builder-utils/src/index.ts"],
       "@buildquick/builder-utils-react": [

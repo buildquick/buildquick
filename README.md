@@ -4,9 +4,8 @@
 
 You've reached our main open source monorepo. You can find various helpful NPM packages under the `packages` directory:
 
-- [`@buildquick/builder-fetchers`](https://github.com/buildquick/buildquick/tree/main/packages/builder-fetchers): Utilities to fetch content from Builder's content API
 - [`@buildquick/builder-types`](https://github.com/buildquick/buildquick/tree/main/packages/builder-types): TypeScript types for Builder content
-- [`@buildquick/builder-utils`](https://github.com/buildquick/buildquick/tree/main/packages/builder-utils): Various utilities for working with Builder content
+- [`@buildquick/builder-utils`](https://github.com/buildquick/buildquick/tree/main/packages/builder-utils): Various utilities for fetching and working with Builder content
 
 ## Need a Builder.io expert?
 
