@@ -42,7 +42,8 @@
       "executor": "@jscutlery/semver:version",
       "options": {
         "preset": "conventional",
-        "trackDeps": true
+        "trackDeps": true,
+        "parallel": 1
       }
     }
   }
