@@ -2,6 +2,9 @@
   "name": "@buildquick/builder-utils-react",
   "version": "0.0.1",
   "type": "module",
+  "dependencies": {
+    "@buildquick/builder-types": "^0.0.7"
+  },
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
