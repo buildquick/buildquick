@@ -32,6 +32,12 @@
       "options": {
         "lintFilePatterns": ["packages/builder-utils-react/**/*.ts"]
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
+      }
     }
   },
   "tags": []
