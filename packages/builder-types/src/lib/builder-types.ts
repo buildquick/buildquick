@@ -227,11 +227,21 @@ export type DataSource = {
   };
 };
 
-export type ContentApiV2Item<
-  D = {
-    [modelField: string]: Field;
-  }
-> = {
+type DefaultDataType = {
+  [modelField: string]:
+    | Block[]
+    | CustomFont[]
+    | Input[]
+    | { [key: string]: string }
+    | string
+    | State
+    | false
+    | string[]
+    | undefined
+    | Field;
+};
+
+export type ContentApiV2Item<D = DefaultDataType> = {
   '@liveSyncEnabled'?: boolean;
   '@originId'?: string;
   '@originModelId'?: string;
@@ -437,11 +447,7 @@ type CustomFont = {
   isUserFont: boolean;
 };
 
-type ContentApiV2ItemData<
-  D = {
-    [modelField: string]: Field;
-  }
-> = {
+type ContentApiV2ItemData<D = DefaultDataType> = {
   blocks?: Block[];
   customFonts?: CustomFont[];
   httpRequests?: {
