@@ -1,1 +1,1 @@
-export * from './lib/builder-utils-react';
+export * from './lib/BuilderComponent';
