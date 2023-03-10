@@ -460,3 +460,7 @@ export type ContentItem = ContentApiV2Item;
 export type ContentApiV2Response = {
   results: ContentItem[];
 };
+
+export type ContentJsRef = {
+  ref?: HTMLElement;
+};
