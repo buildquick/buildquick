@@ -1,4 +1,4 @@
-import { getSome } from './builder-fetchers';
+import { getSome } from './fetchers';
 import { server } from '../mocks/server';
 import { buildquickPages } from '../mocks/data';
 
