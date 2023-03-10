@@ -1,7 +1,15 @@
 {
   "name": "@buildquick/builder-utils-react",
   "version": "0.0.1",
+  "main": "./index.js",
   "type": "module",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js"
+    }
+  },
   "dependencies": {
     "@buildquick/builder-types": "^0.0.7"
   },
