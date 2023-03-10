@@ -1,6 +1,6 @@
 {
   "name": "@buildquick/builder-types",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "type": "module",
   "main": "./src/index.js"
 }
