@@ -5,5 +5,8 @@
   "main": "./index.js",
   "dependencies": {
     "@buildquick/builder-types": "^0.0.6"
+  },
+  "peerDependencies": {
+    "@builder.io/sdk": "^1.1.25"
   }
 }
