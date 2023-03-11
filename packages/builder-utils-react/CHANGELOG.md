@@ -2,6 +2,11 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.2](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.2.1...builder-utils-react-0.2.2) (2023-03-11)
+
+### Dependency Updates
+
+* `builder-utils` updated to version `0.1.4`
 ### [0.2.1](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.2.0...builder-utils-react-0.2.1) (2023-03-11)
 
 ### Dependency Updates
