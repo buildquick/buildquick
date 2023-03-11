@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.1](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.2.0...builder-utils-react-0.2.1) (2023-03-11)
+
+### Dependency Updates
+
+* `builder-types` updated to version `0.2.0`
+* `builder-utils` updated to version `0.1.3`
+
+### Bug Fixes
+
+* **builder-utils-react:** types for BuilderComponent ([dbc6485](https://github.com/buildquick/buildquick/commit/dbc6485143b94aabfc675b57081af2d2b78a4a2a))
+
 ## [0.2.0](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.1.1...builder-utils-react-0.2.0) (2023-03-11)
 
 ### Dependency Updates
