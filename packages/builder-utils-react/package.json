@@ -11,7 +11,7 @@
     }
   },
   "dependencies": {
-    "@buildquick/builder-types": "^0.1.0",
+    "@buildquick/builder-types": "^0.2.0",
     "@buildquick/builder-utils": "^0.1.0"
   },
   "peerDependencies": {
