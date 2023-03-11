@@ -422,7 +422,7 @@ type Field =
   | ComplexField<Field>
   | ComplexField<Field>[];
 
-type Block =
+export type Block =
   | ElementV1
   | ElementV2WithChildren
   | ElementV2WithoutChildren
