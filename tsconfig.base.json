@@ -14,6 +14,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
+    "noErrorTruncation": true,
     "paths": {
       "@buildquick/builder-types": ["packages/builder-types/src/index.ts"],
       "@buildquick/builder-utils": ["packages/builder-utils/src/index.ts"],
