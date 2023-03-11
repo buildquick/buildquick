@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.0](https://github.com/buildquick/buildquick/compare/builder-types-0.1.2...builder-types-0.2.0) (2023-03-11)
+
+
+### Features
+
+* **builder-types:** export Block ([d41fc35](https://github.com/buildquick/buildquick/commit/d41fc35172b1e0e4adbf7a0b9d64c9677ee78108))
+
 ### [0.1.2](https://github.com/buildquick/buildquick/compare/builder-types-0.1.1...builder-types-0.1.2) (2023-03-10)
 
 
