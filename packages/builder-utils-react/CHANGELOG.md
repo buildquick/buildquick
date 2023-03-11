@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.0](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.1.1...builder-utils-react-0.2.0) (2023-03-11)
+
+### Dependency Updates
+
+* `builder-types` updated to version `0.1.2`
+* `builder-utils` updated to version `0.1.2`
+
+### Features
+
+* **builder-utils-react:** create BuilderContent shim ([22094ae](https://github.com/buildquick/buildquick/commit/22094ae0126a938cd3c4f284c30cc43c8d57eccb))
+
 ### [0.1.1](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.1.0...builder-utils-react-0.1.1) (2023-03-10)
 
 ### Dependency Updates
