@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.4](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.2.3...builder-utils-react-0.2.4) (2023-03-13)
+
+
+### Bug Fixes
+
+* **builder-utils-react:** broken module exports ([c9e82c7](https://github.com/buildquick/buildquick/commit/c9e82c71449979134c7c6bba4e24e80a41eb7c1a))
+
 ### [0.2.3](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.2.2...builder-utils-react-0.2.3) (2023-03-13)
 
 ### [0.2.2](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.2.1...builder-utils-react-0.2.2) (2023-03-11)
