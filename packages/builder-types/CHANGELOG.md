@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.0](https://github.com/buildquick/buildquick/compare/builder-types-0.3.0...builder-types-0.4.0) (2023-03-15)
+
+
+### Features
+
+* **builder-types:** add includeUnpublished and sort API options ([d12d469](https://github.com/buildquick/buildquick/commit/d12d46983674233fd58c6b6c28c48c30036009e4))
+
 ## [0.3.0](https://github.com/buildquick/buildquick/compare/builder-types-0.2.0...builder-types-0.3.0) (2023-03-15)
 
 
