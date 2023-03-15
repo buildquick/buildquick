@@ -153,6 +153,8 @@ export type ContentApiV2Options = {
   static?: boolean;
   noTraverse?: boolean;
   noTargeting?: boolean;
+  includeUnpublished?: boolean;
+  sort?: Record<string, object | string | number>;
 };
 
 type MakeQueryType<T> = {
