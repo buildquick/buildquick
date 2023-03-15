@@ -88,6 +88,9 @@ const getApiOptions = <T>(
     'rev',
     'static',
     'noTraverse',
+    'noTargeting',
+    'includeUnpublished',
+    'sort',
   ];
 
   const isValidRequiredProp = (prop: RequiredProperties) =>
