@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.0](https://github.com/buildquick/buildquick/compare/builder-types-0.2.0...builder-types-0.3.0) (2023-03-15)
+
+
+### Features
+
+* **builder-types:** export ContentApiV2ItemData ([bb43979](https://github.com/buildquick/buildquick/commit/bb4397961a732d6ee0c6c278950a28681a5642f2))
+
 ## [0.2.0](https://github.com/buildquick/buildquick/compare/builder-types-0.1.2...builder-types-0.2.0) (2023-03-11)
 
 
