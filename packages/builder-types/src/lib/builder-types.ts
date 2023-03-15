@@ -447,7 +447,7 @@ type CustomFont = {
   isUserFont: boolean;
 };
 
-type ContentApiV2ItemData<D = DefaultDataType> = {
+export type ContentApiV2ItemData<D = DefaultDataType> = {
   blocks?: Block[];
   customFonts?: CustomFont[];
   httpRequests?: {
