@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.1](https://github.com/buildquick/buildquick/compare/builder-utils-0.2.0...builder-utils-0.2.1) (2023-03-17)
+
+
+### Bug Fixes
+
+* **builder-utils:** fix exponential backoff ([db820e6](https://github.com/buildquick/buildquick/commit/db820e66944ba7e488f343cc7d5f6dcfd1a4981c))
+
 ## [0.2.0](https://github.com/buildquick/buildquick/compare/builder-utils-0.1.5...builder-utils-0.2.0) (2023-03-17)
 
 
