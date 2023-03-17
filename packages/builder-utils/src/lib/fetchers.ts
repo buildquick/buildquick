@@ -76,7 +76,6 @@ const getApiOptions = <T>(
     'prerender',
     'extractCss',
     'offset',
-    'model',
     'cache',
     'locale',
     'entry',
