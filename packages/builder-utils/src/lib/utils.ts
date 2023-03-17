@@ -35,7 +35,7 @@ export const backoff = async <T>(
           `Attempt ${
             count + 1
           } of ${maxTries} failed. Retrying in about ${Math.round(
-            retryDelay
+            retryDelay / 1000
           )} s...`
         );
 
