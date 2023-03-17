@@ -11,7 +11,7 @@ export const backoff = async <T>(
 
   for (let count = 0; count < maxTries; count++) {
     jitter = Math.ceil(Math.random() * 1000);
-    retryDelay = Math.min(2 ^ (count + jitter), maxBackoff);
+    retryDelay = Math.min(2 ** count * 1000 + jitter, maxBackoff);
 
     try {
       // Attempt to execute the callback.
@@ -31,7 +31,13 @@ export const backoff = async <T>(
       // Otherwise, ignore the error, introduce a delay, and loop over again
       // to retry the fetch.
       if (process.env['DEBUG'])
-        console.log(`Attempt ${count + 1} of ${maxTries} failed. Retrying...`);
+        console.log(
+          `Attempt ${
+            count + 1
+          } of ${maxTries} failed. Retrying in about ${Math.round(
+            retryDelay
+          )} s...`
+        );
 
       await createTimeout(retryDelay);
     }
