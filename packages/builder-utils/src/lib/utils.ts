@@ -1,3 +1,6 @@
+const createTimeout = (retryDelay: number) =>
+  new Promise<void>((resolve) => setTimeout(() => resolve(), retryDelay));
+
 export const backoff = async <T>(
   callback: () => Promise<T>,
   maxBackoff = 32000,
@@ -30,9 +33,7 @@ export const backoff = async <T>(
       if (process.env['DEBUG'])
         console.log(`Attempt ${count + 1} of ${maxTries} failed. Retrying...`);
 
-      await new Promise<void>((resolve) =>
-        setTimeout(() => resolve(), retryDelay)
-      );
+      await createTimeout(retryDelay);
     }
   }
 
