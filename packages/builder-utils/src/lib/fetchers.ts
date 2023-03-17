@@ -136,9 +136,8 @@ const getApiOptions = <T>(
   ) as ValidateShape<T, ContentApiV2Options>;
 
   return {
-    // Include shared content API options here.
-    noTraverse: true,
-    includeRefs: false,
+    noTraverse: false,
+    includeRefs: true,
     ...validOptions,
   };
 };
