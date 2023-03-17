@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.0](https://github.com/buildquick/buildquick/compare/builder-utils-0.1.5...builder-utils-0.2.0) (2023-03-17)
+
+
+### Features
+
+* **builder-utils:** allow for private keys in fetch ([2db9690](https://github.com/buildquick/buildquick/commit/2db96905c6508c0733a116420f4bc927c58f5f54))
+* **builder-utils:** recurse refs and symbols by default ([18da795](https://github.com/buildquick/buildquick/commit/18da7953b510d584fb29b0d47eefc5555b803dd1))
+
+
+### Bug Fixes
+
+* **builder-utils:** backoff closure issue ([51e7201](https://github.com/buildquick/buildquick/commit/51e7201ea162b03908a4ed4fc180896f4e8818d6))
+* **builder-utils:** omit superfluous model query param from fetch URL ([bab9907](https://github.com/buildquick/buildquick/commit/bab9907d0f068f98f265e5dfb878b1b3c04eb502))
+
 ### [0.1.5](https://github.com/buildquick/buildquick/compare/builder-utils-0.1.4...builder-utils-0.1.5) (2023-03-15)
 
 ### Dependency Updates
