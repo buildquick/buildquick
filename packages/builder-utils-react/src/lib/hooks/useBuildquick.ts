@@ -1,4 +1,5 @@
 import {
+  rgbaToFilter,
   waitForElement,
   waitForElements,
   waitForRef,
@@ -8,6 +9,7 @@ export const useBuildquick = () => ({
   context: {
     buildquick: {
       utils: {
+        rgbaToFilter,
         waitForElement,
         waitForElements,
         waitForRef,
