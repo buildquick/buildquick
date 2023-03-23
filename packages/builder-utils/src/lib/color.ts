@@ -311,14 +311,15 @@ class Solver {
 
 export const rgbaToFilter = (rgba: string) => {
   // Also matches on rgb, not just rgba.
-  const regex = /^rgba?\((\d+),\s?(\d+),\s?(\d+)(?:,\s)?(\d+)?\)$/i;
+  const regex = /^rgba?\((\d+),\s?(\d+),\s?(\d+)(?:,\s)?(\d(?:\.\d+)?)?\)$/i;
   const result = regex.exec(rgba);
 
   if (result) {
     const color = new Color(
       parseInt(result[1]),
       parseInt(result[2]),
-      parseInt(result[3])
+      parseInt(result[3]),
+      parseFloat(result[4])
     );
     const solver = new Solver(color);
     const solved = solver.solve();
