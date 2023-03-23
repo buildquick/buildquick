@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.0](https://github.com/buildquick/buildquick/compare/builder-utils-0.2.2...builder-utils-0.3.0) (2023-03-23)
+
+
+### Features
+
+* **builder-utils:** create rgbaToFilter ([22c18f8](https://github.com/buildquick/buildquick/commit/22c18f887d0b838d0b9c34929b4be45f7280dea3))
+
+
+### Bug Fixes
+
+* **builder-utils:** backoff debug message ([beeb79c](https://github.com/buildquick/buildquick/commit/beeb79c273472d95408638e1974d78d8a7a883d2))
+
 ### [0.2.2](https://github.com/buildquick/buildquick/compare/builder-utils-0.2.1...builder-utils-0.2.2) (2023-03-17)
 
 ### [0.2.1](https://github.com/buildquick/buildquick/compare/builder-utils-0.2.0...builder-utils-0.2.1) (2023-03-17)
