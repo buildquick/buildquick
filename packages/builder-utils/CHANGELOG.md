@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.3.1](https://github.com/buildquick/buildquick/compare/builder-utils-0.3.0...builder-utils-0.3.1) (2023-03-23)
+
+
+### Bug Fixes
+
+* **builder-utils:** alpha channel for rgbaToFilter ([2af7cea](https://github.com/buildquick/buildquick/commit/2af7cea8a50057364dece784c8165950b3808a93))
+
 ## [0.3.0](https://github.com/buildquick/buildquick/compare/builder-utils-0.2.2...builder-utils-0.3.0) (2023-03-23)
 
 
