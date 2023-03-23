@@ -49,6 +49,7 @@ export default defineConfig({
         'react/jsx-runtime',
         '@builder.io/react',
         '@builder.io/sdk',
+        '@buildquick/builder-utils',
       ],
     },
   },
