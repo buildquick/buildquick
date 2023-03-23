@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.0](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.2.4...builder-utils-react-0.3.0) (2023-03-23)
+
+### Dependency Updates
+
+* `builder-utils` updated to version `0.3.0`
+* `builder-types` updated to version `0.4.0`
+
+### Features
+
+* **builder-utils-react:** add rgbaToFilter to useBuildquick ([e299972](https://github.com/buildquick/buildquick/commit/e299972ef45a6641376796027063accbdbc772d2))
+
 ### [0.2.4](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.2.3...builder-utils-react-0.2.4) (2023-03-13)
 
 
