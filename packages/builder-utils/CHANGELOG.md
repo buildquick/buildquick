@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.0](https://github.com/buildquick/buildquick/compare/builder-utils-0.3.1...builder-utils-0.4.0) (2023-03-27)
+
+
+### Features
+
+* **builder-utils:** allow using fetch options with fetchers ([3d2d6ad](https://github.com/buildquick/buildquick/commit/3d2d6ad57675273519a8c309fd59944250095401))
+
 ### [0.3.1](https://github.com/buildquick/buildquick/compare/builder-utils-0.3.0...builder-utils-0.3.1) (2023-03-23)
 
 
