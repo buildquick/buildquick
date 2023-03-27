@@ -21,6 +21,7 @@ type ContentFetcherOptions<T> = ContentApiV2Options & {
   maxBackoff?: number;
   maxTries?: number;
   authToken?: `bpk-${string}`;
+  fetchOptions?: RequestInit;
 };
 
 type ContentFetcher<T, O = ContentFetcherOptions<T>> = (
@@ -147,12 +148,19 @@ const get: ContentFetcher<
   ContentFetcherOptions<ContentApiV2Item | ContentApiV2Item[]>
 > = async (options) => {
   const url = createContentApiV2Url(options);
-  const res = await fetch(
-    url,
-    options.authToken
-      ? { headers: { Authorization: `Bearer ${options.authToken}` } }
-      : {}
-  );
+  const init = options.fetchOptions ?? {};
+
+  if (
+    options.authToken &&
+    !(init.headers as Record<string, string>)['Authorization']
+  ) {
+    init.headers ||= {};
+    Object.assign(init.headers, {
+      Authorization: `Bearer ${options.authToken}`,
+    });
+  }
+
+  const res = await fetch(url, init);
   const data: ContentApiV2Response = await res.json();
 
   return data?.results || null;
