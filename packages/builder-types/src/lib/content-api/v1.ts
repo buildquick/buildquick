@@ -41,6 +41,6 @@ export interface ContentItemVariantV1<Data>
   extends ContentItemVariantBase<Data, ContentItemV1<Data>> {}
 
 export type ContentApiResponseV1<
-  SchemaData = DefaultSchemaDataType<ReferenceV1, BlockV1>,
-  Model extends string = string
+  Model extends string = string,
+  SchemaData = DefaultSchemaDataType<ReferenceV1, BlockV1>
 > = Record<Model, ContentItemV1<SchemaData>[]>;
