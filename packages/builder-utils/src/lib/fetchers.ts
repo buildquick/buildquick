@@ -1,8 +1,7 @@
 import {
-  ContentApiV2Item,
-  ContentApiV2Options,
-  ContentApiV2Response,
-  ContentItem,
+  ContentItemV2,
+  ContentApiOptions,
+  ContentApiResponseV2,
 } from '@buildquick/builder-types';
 import { backoff } from './utils';
 import { QueryString } from '@builder.io/sdk/dist/src/classes/query-string.class';
@@ -13,9 +12,9 @@ type ValidateShape<T, Shape> = T extends Shape
     : never
   : never;
 
-type Transform<T> = (results: ContentItem[]) => Promise<T>;
+type Transform<T> = (results: ContentItemV2[]) => Promise<T>;
 
-type ContentFetcherOptions<T> = ContentApiV2Options & {
+type ContentFetcherOptions<T> = ContentApiOptions & {
   model: string;
   transform?: Transform<T>;
   maxBackoff?: number;
@@ -29,21 +28,21 @@ type ContentFetcher<T, O = ContentFetcherOptions<T>> = (
 ) => Promise<T>;
 
 type GetAllOptions = Omit<
-  ContentFetcherOptions<ContentApiV2Item[]>,
+  ContentFetcherOptions<ContentItemV2[]>,
   'limit' | 'transform'
 > & {
   pageLimit?: number;
   pageTransform?: (
-    content: ContentApiV2Item[],
+    content: ContentItemV2[],
     page: number
-  ) => Promise<ContentApiV2Item[]>;
+  ) => Promise<ContentItemV2[]>;
 };
 
 // Max limit supported by Builder content API is 100.
 const BUILDER_MAX_LIMIT = 100;
 
 export const createContentApiV2Url = (
-  options: ContentApiV2Options & Pick<ContentFetcherOptions<never>, 'model'>
+  options: ContentApiOptions & Pick<ContentFetcherOptions<never>, 'model'>
 ) => {
   const apiOptions = getApiOptions(options);
   const query = QueryString.stringifyDeep(apiOptions);
@@ -57,7 +56,7 @@ const isString = (str: unknown): str is string =>
 
 const getApiOptions = <T>(
   options: Record<string, unknown>
-): ValidateShape<T, ContentApiV2Options> => {
+): ValidateShape<T, ContentApiOptions> => {
   type RequiredProperties = keyof typeof requiredProperties;
 
   // NOTE: Keep this in sync with the content API options type.
@@ -100,15 +99,14 @@ const getApiOptions = <T>(
 
   const doesOptionsHaveRequiredProperties = (
     options: Record<string, unknown>
-  ): options is Pick<ContentApiV2Options, RequiredProperties> &
+  ): options is Pick<ContentApiOptions, RequiredProperties> &
     Record<string, unknown> =>
     (Object.keys(requiredProperties) as RequiredProperties[]).every(
       isValidRequiredProp
     );
 
-  const isValidOptionsProp = (
-    prop: string
-  ): prop is keyof ContentApiV2Options => expectedProperties.includes(prop);
+  const isValidOptionsProp = (prop: string): prop is keyof ContentApiOptions =>
+    expectedProperties.includes(prop);
 
   if (!doesOptionsHaveRequiredProperties(options)) {
     const invalidRequiredProps = Object.keys(requiredProperties).filter(
@@ -123,7 +121,7 @@ const getApiOptions = <T>(
     );
   }
 
-  const validOptions = Object.keys(options).reduce<ContentApiV2Options>(
+  const validOptions = Object.keys(options).reduce<ContentApiOptions>(
     (acc, prop) => {
       if (isValidOptionsProp(prop)) {
         const value = options[prop];
@@ -134,7 +132,7 @@ const getApiOptions = <T>(
       return acc;
     },
     { apiKey: options.apiKey }
-  ) as ValidateShape<T, ContentApiV2Options>;
+  ) as ValidateShape<T, ContentApiOptions>;
 
   return {
     noTraverse: false,
@@ -144,8 +142,8 @@ const getApiOptions = <T>(
 };
 
 const get: ContentFetcher<
-  ContentApiV2Item[],
-  ContentFetcherOptions<ContentApiV2Item | ContentApiV2Item[]>
+  ContentItemV2[],
+  ContentFetcherOptions<ContentItemV2 | ContentItemV2[]>
 > = async (options) => {
   const url = createContentApiV2Url(options);
   const init = options.fetchOptions ?? {};
@@ -161,13 +159,13 @@ const get: ContentFetcher<
   }
 
   const res = await fetch(url, init);
-  const data: ContentApiV2Response = await res.json();
+  const data: ContentApiResponseV2 = await res.json();
 
   return data?.results || null;
 };
 
-export const getOne: ContentFetcher<ContentApiV2Item> = async (options) => {
-  const defaultTransform: Transform<ContentApiV2Item> = async (results) =>
+export const getOne: ContentFetcher<ContentItemV2> = async (options) => {
+  const defaultTransform: Transform<ContentItemV2> = async (results) =>
     results[0];
   const transform = options.transform ?? defaultTransform;
   const execute = async () => {
@@ -179,8 +177,8 @@ export const getOne: ContentFetcher<ContentApiV2Item> = async (options) => {
   return await backoff(execute, options.maxBackoff, options.maxTries);
 };
 
-export const getSome: ContentFetcher<ContentApiV2Item[]> = async (options) => {
-  const defaultTransform: Transform<ContentApiV2Item[]> = async (results) =>
+export const getSome: ContentFetcher<ContentItemV2[]> = async (options) => {
+  const defaultTransform: Transform<ContentItemV2[]> = async (results) =>
     results;
   const transform = options.transform ?? defaultTransform;
   const execute = async () => {
@@ -192,15 +190,15 @@ export const getSome: ContentFetcher<ContentApiV2Item[]> = async (options) => {
   return await backoff(execute, options.maxBackoff, options.maxTries);
 };
 
-export const getAll: ContentFetcher<ContentApiV2Item[], GetAllOptions> = async (
+export const getAll: ContentFetcher<ContentItemV2[], GetAllOptions> = async (
   options
 ) => {
   const pageLimit = options.pageLimit || BUILDER_MAX_LIMIT;
-  const defaultPageTransform: Transform<ContentApiV2Item[]> = async (results) =>
+  const defaultPageTransform: Transform<ContentItemV2[]> = async (results) =>
     results;
   const pageTransform = options.pageTransform || defaultPageTransform;
   let offset = 0;
-  let nextItems: Promise<ContentApiV2Item[] | null>;
+  let nextItems: Promise<ContentItemV2[] | null>;
   let allItems: (typeof nextItems)[] = [];
   let page = 0;
   let fetchContent;
@@ -237,10 +235,10 @@ export const getAll: ContentFetcher<ContentApiV2Item[], GetAllOptions> = async (
   // Ensure that all transformations have been applied.
   return (await Promise.all(allItems))
     .flat()
-    .filter<ContentApiV2Item>((item): item is ContentApiV2Item => !!item);
+    .filter<ContentItemV2>((item): item is ContentItemV2 => !!item);
 };
 
-export const getUrlPathsFromContentItem = (content: ContentApiV2Item) => {
+export const getUrlPathsFromContentItem = (content: ContentItemV2) => {
   if (Array.isArray(content.data.url)) return content.data.url;
   return [content.data.url];
 };
