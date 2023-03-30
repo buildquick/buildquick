@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.0](https://github.com/buildquick/buildquick/compare/builder-types-0.4.0...builder-types-1.0.0) (2023-03-30)
+
+
+### Features
+
+* **builder-types:** major refactor + add v3 content API types ([430b8fa](https://github.com/buildquick/buildquick/commit/430b8fa6e0fdc365b3c4de7a23b46ab62b9beaaa))
+
 ## [0.4.0](https://github.com/buildquick/buildquick/compare/builder-types-0.3.0...builder-types-0.4.0) (2023-03-15)
 
 
