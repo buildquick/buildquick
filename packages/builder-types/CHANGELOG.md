@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [1.0.1](https://github.com/buildquick/buildquick/compare/builder-types-1.0.0...builder-types-1.0.1) (2023-03-30)
+
+
+### Bug Fixes
+
+* **builder-types:** correct v1 response generics order ([0b26fdc](https://github.com/buildquick/buildquick/commit/0b26fdce40363dbc4ea1f0ffece82fafdf9d464a))
+
 ## [1.0.0](https://github.com/buildquick/buildquick/compare/builder-types-0.4.0...builder-types-1.0.0) (2023-03-30)
 
 
