@@ -260,7 +260,7 @@ export type ReferenceBase = {
   model: string;
 };
 
-interface ComplexField<T> {
+export interface ComplexField<T> {
   [key: string]: T;
 }
 export type Field<Reference> =

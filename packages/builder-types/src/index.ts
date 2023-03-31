@@ -4,4 +4,4 @@ export * from './lib/content-api/options';
 export * from './lib/content-api/v1';
 export * from './lib/content-api/v2';
 export * from './lib/content-api/v3';
-export { Field } from './lib/content-api/base';
+export { Field, ComplexField } from './lib/content-api/base';
