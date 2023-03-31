@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.2.0](https://github.com/buildquick/buildquick/compare/builder-types-1.1.1...builder-types-1.2.0) (2023-03-31)
+
+
+### Features
+
+* **builder-types:** export ComplexField ([2309724](https://github.com/buildquick/buildquick/commit/2309724f4655a14674895c24e3ea00c6a666f795))
+
 ### [1.1.1](https://github.com/buildquick/buildquick/compare/builder-types-1.1.0...builder-types-1.1.1) (2023-03-31)
 
 
