@@ -263,7 +263,7 @@ export type ReferenceBase = {
 interface ComplexField<T> {
   [key: string]: T;
 }
-type Field<Reference> =
+export type Field<Reference> =
   | string
   | string[]
   | number
