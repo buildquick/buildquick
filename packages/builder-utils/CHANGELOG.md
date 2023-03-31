@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.4.2](https://github.com/buildquick/buildquick/compare/builder-utils-0.4.1...builder-utils-0.4.2) (2023-03-31)
+
+### Dependency Updates
+
+* `builder-types` updated to version `1.0.1`
+
+### Bug Fixes
+
+* **builder-utils:** auth token not applied correctly ([b39d0ae](https://github.com/buildquick/buildquick/commit/b39d0ae52022cd954527988f053b7b9c365b60d9))
+
 ### [0.4.1](https://github.com/buildquick/buildquick/compare/builder-utils-0.4.0...builder-utils-0.4.1) (2023-03-30)
 
 ### Dependency Updates
