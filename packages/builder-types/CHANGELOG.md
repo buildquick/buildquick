@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [1.1.1](https://github.com/buildquick/buildquick/compare/builder-types-1.1.0...builder-types-1.1.1) (2023-03-31)
+
+
+### Bug Fixes
+
+* **builder-types:** actually export Field ([dd0924c](https://github.com/buildquick/buildquick/commit/dd0924c8064ad41de25b01e7c62c386d1e2a9088))
+
 ## [1.1.0](https://github.com/buildquick/buildquick/compare/builder-types-1.0.1...builder-types-1.1.0) (2023-03-31)
 
 
