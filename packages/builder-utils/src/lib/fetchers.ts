@@ -150,7 +150,7 @@ const get: ContentFetcher<
 
   if (
     options.authToken &&
-    !(init.headers as Record<string, string>)['Authorization']
+    !(init.headers as Record<string, string> | undefined)?.['Authorization']
   ) {
     init.headers ||= {};
     Object.assign(init.headers, {
