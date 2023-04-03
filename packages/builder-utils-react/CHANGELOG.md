@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.0](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.3.2...builder-utils-react-0.4.0) (2023-04-03)
+
+### Dependency Updates
+
+* `builder-types` updated to version `1.2.0`
+* `builder-utils` updated to version `0.4.3`
+
+### Features
+
+* **builder-utils-react:** export props types ([ff1e240](https://github.com/buildquick/buildquick/commit/ff1e2404029cda564ad98f5e97a6b38f00b41a8d))
+
 ### [0.3.2](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.3.1...builder-utils-react-0.3.2) (2023-03-30)
 
 ### Dependency Updates
