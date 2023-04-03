@@ -44,5 +44,5 @@ type BuilderComponentConstructor = new (
 const BuilderComponent =
   BuilderIoBuilderComponent as BuilderComponentConstructor;
 
-export { BuilderComponent };
+export { BuilderComponent, BuilderComponentProps };
 export default BuilderComponent;

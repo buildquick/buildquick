@@ -23,5 +23,5 @@ type BuilderContentConstructor<ContentType extends ContentItem = ContentItem> =
 
 const BuilderContent = BuilderIoBuilderContent as BuilderContentConstructor;
 
-export { BuilderContent };
+export { BuilderContent, BuilderContentProps };
 export default BuilderContent;
