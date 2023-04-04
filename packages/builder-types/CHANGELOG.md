@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [1.3.2](https://github.com/buildquick/buildquick/compare/builder-types-1.3.1...builder-types-1.3.2) (2023-04-04)
+
+
+### Bug Fixes
+
+* **builder-types:** index signature for DefaultSchemaData ([e33089f](https://github.com/buildquick/buildquick/commit/e33089f8a242219d554668b57a462a543148d9cf))
+
 ### [1.3.1](https://github.com/buildquick/buildquick/compare/builder-types-1.3.0...builder-types-1.3.1) (2023-04-04)
 
 
