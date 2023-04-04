@@ -11,7 +11,7 @@ import {
 } from './base';
 
 export type ReferenceV2 = ReferenceBase & { value?: ContentItemV2 };
-export type DefaultSchemaDataV2 = DefaultSchemaDataBase<ReferenceV2, BlockV2>;
+export type DefaultSchemaDataV2 = DefaultSchemaDataBase<ReferenceV2>;
 export type BlockWithChildrenV2 = BlockWithChildrenBase<ReferenceV2, BlockV2>;
 export type BlockWithoutChildrenV2 = BlockWithoutChildrenBase<ReferenceV2>;
 export type SymbolV2 = SymbolBase<ReferenceV2, ContentItemV2>;

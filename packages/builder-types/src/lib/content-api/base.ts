@@ -80,18 +80,8 @@ export type DataSource<Reference> = {
 
 /* Schema data */
 
-export type DefaultSchemaDataBase<Reference, Block> = {
-  [modelField: string]:
-    | Block[]
-    | CustomFont[]
-    | Input<Reference>[]
-    | { [key: string]: string }
-    | string
-    | State<Reference>
-    | false
-    | string[]
-    | undefined
-    | Field<Reference>;
+export type DefaultSchemaDataBase<Reference> = {
+  [modelField: string]: Field<Reference>;
 };
 
 /* Content item */
@@ -294,7 +284,7 @@ type CustomFont = {
 export type ContentItemData<
   Reference,
   Block,
-  SchemaData = DefaultSchemaDataBase<Reference, Block>
+  SchemaData = DefaultSchemaDataBase<Reference>
 > = {
   blocks?: Block[];
   cssCode?: string;
