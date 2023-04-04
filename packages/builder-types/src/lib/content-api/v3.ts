@@ -11,7 +11,7 @@ import {
 } from './base';
 
 export type ReferenceV3 = ReferenceBase & { data?: ContentItemV3 };
-
+export type DefaultSchemaDataV3 = DefaultSchemaDataBase<ReferenceV3, BlockV3>;
 export type BlockWithChildrenV3 = BlockWithChildrenBase<ReferenceV3, BlockV3>;
 export type BlockWithoutChildrenV3 = BlockWithoutChildrenBase<ReferenceV3>;
 export type SymbolV3 = SymbolBase<ReferenceV3, ContentItemV3>;
@@ -22,13 +22,11 @@ export type BlockV3 =
   | SymbolV3
   | CustomComponentV3;
 
-export type ContentItemDataV3<
-  SchemaData = DefaultSchemaDataBase<ReferenceV3, BlockV3>
-> = ContentItemData<ReferenceV3, BlockV3, SchemaData>;
+export type ContentItemDataV3<SchemaData = DefaultSchemaDataV3> =
+  ContentItemData<ReferenceV3, BlockV3, SchemaData>;
 
-export interface ContentItemV3<
-  SchemaData = DefaultSchemaDataBase<ReferenceV3, BlockV3>
-> extends Omit<
+export interface ContentItemV3<SchemaData = DefaultSchemaDataV3>
+  extends Omit<
     ContentItemBase<
       ContentItemData<ReferenceV3, BlockV3, SchemaData>,
       ContentItemVariantV3<ContentItemData<ReferenceV3, BlockV3, SchemaData>>,
@@ -56,8 +54,6 @@ export interface ContentItemV3<
 export interface ContentItemVariantV3<Data>
   extends ContentItemVariantBase<Data, ContentItemV3<Data>> {}
 
-export type ContentApiResponseV3<
-  SchemaData = DefaultSchemaDataBase<ReferenceV3, BlockV3>
-> = {
+export type ContentApiResponseV3<SchemaData = DefaultSchemaDataV3> = {
   results: ContentItemV3<ContentItemDataV3<SchemaData>>[];
 };
