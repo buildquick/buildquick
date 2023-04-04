@@ -80,9 +80,7 @@ export type DataSource<Reference> = {
 
 /* Schema data */
 
-export type DefaultSchemaDataBase<Reference> = {
-  [modelField: string]: Field<Reference>;
-};
+export type DefaultSchemaDataBase<Reference> = Record<string, Field<Reference>>;
 
 /* Content item */
 
