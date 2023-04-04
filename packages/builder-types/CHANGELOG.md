@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [1.2.1](https://github.com/buildquick/buildquick/compare/builder-types-1.2.0...builder-types-1.2.1) (2023-04-04)
+
+
+### Bug Fixes
+
+* **builder-types:** types for BlockWithChildren children ([a8abfa1](https://github.com/buildquick/buildquick/commit/a8abfa1716473daa5c962baea13d1b1d5d982b3c))
+
 ## [1.2.0](https://github.com/buildquick/buildquick/compare/builder-types-1.1.1...builder-types-1.2.0) (2023-03-31)
 
 
