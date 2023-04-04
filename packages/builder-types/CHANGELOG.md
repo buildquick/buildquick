@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [1.3.1](https://github.com/buildquick/buildquick/compare/builder-types-1.3.0...builder-types-1.3.1) (2023-04-04)
+
+
+### Bug Fixes
+
+* **builder-types:** remove superfluous types from DefaultSchemaDataBase ([c41d3d8](https://github.com/buildquick/buildquick/commit/c41d3d806151ec1123a848ba5fa746418aa72d20))
+
 ## [1.3.0](https://github.com/buildquick/buildquick/compare/builder-types-1.2.1...builder-types-1.3.0) (2023-04-04)
 
 

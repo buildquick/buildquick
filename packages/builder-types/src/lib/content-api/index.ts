@@ -5,7 +5,7 @@ import { BlockV3, ContentItemV3, ReferenceV3 } from './v3';
 
 export type Block = BlockV1 | BlockV2 | BlockV3;
 export type Reference = ReferenceV1 | ReferenceV2 | ReferenceV3;
-export type ContentItem<SchemaData = DefaultSchemaDataBase<Reference, Block>> =
+export type ContentItem<SchemaData = DefaultSchemaDataBase<Reference>> =
   | ContentItemV1<SchemaData>
   | ContentItemV2<SchemaData>
   | ContentItemV3<SchemaData>;
