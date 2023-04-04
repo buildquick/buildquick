@@ -12,10 +12,7 @@ import {
 
 export type ReferenceV1 = ReferenceBase & { value?: ContentItemV1 };
 
-export type BlockWithChildrenV1 = BlockWithChildrenBase<
-  ReferenceV1,
-  BlockWithChildrenV1
->;
+export type BlockWithChildrenV1 = BlockWithChildrenBase<ReferenceV1, BlockV1>;
 export type BlockWithoutChildrenV1 = BlockWithoutChildrenBase<ReferenceV1>;
 export type SymbolV1 = SymbolBase<ReferenceV1, ContentItemV1>;
 export type CustomComponentV1 = CustomComponentBase<ReferenceV1>;
