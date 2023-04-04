@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.3.0](https://github.com/buildquick/buildquick/compare/builder-types-1.2.1...builder-types-1.3.0) (2023-04-04)
+
+
+### Features
+
+* **builder-types:** create DefaultSchemaDataV* types ([84725ec](https://github.com/buildquick/buildquick/commit/84725ec3657fd097ae7de37d21aa0e12377f307d))
+
 ### [1.2.1](https://github.com/buildquick/buildquick/compare/builder-types-1.2.0...builder-types-1.2.1) (2023-04-04)
 
 
