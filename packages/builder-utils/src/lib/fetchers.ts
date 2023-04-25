@@ -21,6 +21,17 @@ type ContentFetcherOptions<T> = ContentApiOptions & {
   maxTries?: number;
   authToken?: `bpk-${string}`;
   fetchOptions?: RequestInit;
+  getContentApiUrl?: ({
+    model,
+    query,
+    queryString,
+    authToken,
+  }: {
+    model: string;
+    query: ContentApiOptions;
+    queryString: string;
+    authToken?: `bpk-${string}`;
+  }) => Promise<string>;
 };
 
 type ContentFetcher<T, O = ContentFetcherOptions<T>> = (
@@ -41,12 +52,31 @@ type GetAllOptions = Omit<
 // Max limit supported by Builder content API is 100.
 const BUILDER_MAX_LIMIT = 100;
 
-export const createContentApiV2Url = (
-  options: ContentApiOptions & Pick<ContentFetcherOptions<never>, 'model'>
+export const createContentApiV2Url = async (
+  options: ContentApiOptions &
+    Pick<
+      ContentFetcherOptions<never>,
+      'model' | 'getContentApiUrl' | 'authToken'
+    >
 ) => {
   const apiOptions = getApiOptions(options);
   const query = QueryString.stringifyDeep(apiOptions);
-  const url = `https://cdn.builder.io/api/v2/content/${options.model}?${query}`;
+  let url = `https://cdn.builder.io/api/v2/content/${options.model}?${query}`;
+
+  // Override the default content API URL (for example, when proxying the content API).
+  if (options.getContentApiUrl) {
+    const urlOptions: Parameters<
+      Exclude<ContentFetcherOptions<never>['getContentApiUrl'], undefined>
+    >[0] = {
+      model: options.model,
+      query: apiOptions,
+      queryString: query,
+    };
+
+    if (options.authToken) urlOptions.authToken = options.authToken;
+
+    url = await options.getContentApiUrl(urlOptions);
+  }
 
   return url;
 };
@@ -145,7 +175,7 @@ const get: ContentFetcher<
   ContentItemV2[],
   ContentFetcherOptions<ContentItemV2 | ContentItemV2[]>
 > = async (options) => {
-  const url = createContentApiV2Url(options);
+  const url = await createContentApiV2Url(options);
   const init = options.fetchOptions ?? {};
 
   if (
