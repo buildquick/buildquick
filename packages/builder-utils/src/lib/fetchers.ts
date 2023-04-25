@@ -12,7 +12,7 @@ type ValidateShape<T, Shape> = T extends Shape
     : never
   : never;
 
-type Transform<T> = (results: ContentItemV2[]) => Promise<T>;
+type Transform<T> = (data: ContentApiResponseV2) => Promise<T>;
 
 type ContentFetcherOptions<T> = ContentApiOptions & {
   model: string;
@@ -44,12 +44,12 @@ type GetAllOptions = Omit<
 > & {
   pageLimit?: number;
   pageTransform?: ({
-    results,
+    data,
     pageIndex,
     offset,
     limit,
   }: {
-    results: ContentItemV2[];
+    data: ContentApiResponseV2;
     pageIndex: number;
     offset: number;
     limit: number;
@@ -179,7 +179,7 @@ const getApiOptions = <T>(
 };
 
 const get: ContentFetcher<
-  ContentItemV2[],
+  ContentApiResponseV2,
   ContentFetcherOptions<ContentItemV2 | ContentItemV2[]>
 > = async (options) => {
   const url = await createContentApiV2Url(options);
@@ -198,30 +198,30 @@ const get: ContentFetcher<
   const res = await fetch(url, init);
   const data: ContentApiResponseV2 = await res.json();
 
-  return data?.results || null;
+  return data || null;
 };
 
 export const getOne: ContentFetcher<ContentItemV2> = async (options) => {
-  const defaultTransform: Transform<ContentItemV2> = async (results) =>
-    results[0];
+  const defaultTransform: Transform<ContentItemV2> = async (data) =>
+    data.results[0];
   const transform = options.transform ?? defaultTransform;
   const execute = async () => {
-    const results = await get(options);
+    const data = await get(options);
 
-    return await transform(results);
+    return await transform(data);
   };
 
   return await backoff(execute, options.maxBackoff, options.maxTries);
 };
 
 export const getSome: ContentFetcher<ContentItemV2[]> = async (options) => {
-  const defaultTransform: Transform<ContentItemV2[]> = async (results) =>
-    results;
+  const defaultTransform: Transform<ContentItemV2[]> = async (data) =>
+    data.results;
   const transform = options.transform ?? defaultTransform;
   const execute = async () => {
-    const results = await get(options);
+    const data = await get(options);
 
-    return await transform(results);
+    return await transform(data);
   };
 
   return await backoff(execute, options.maxBackoff, options.maxTries);
@@ -232,8 +232,8 @@ export const getAll: ContentFetcher<ContentItemV2[], GetAllOptions> = async (
 ) => {
   const pageLimit = options.pageLimit || BUILDER_MAX_LIMIT;
   const defaultPageTransform: GetAllOptions['pageTransform'] = async ({
-    results,
-  }) => results;
+    data,
+  }) => data.results;
   const pageTransform = options.pageTransform || defaultPageTransform;
   let offset = 0;
   let nextItems: Promise<ContentItemV2[] | null>;
@@ -251,7 +251,8 @@ export const getAll: ContentFetcher<ContentItemV2[], GetAllOptions> = async (
         },
         options
       );
-      const results = await get(batchOptions);
+      const data = await get(batchOptions);
+      const { results } = data;
 
       // Neither of these should ever happen.
       if (!results)
@@ -260,7 +261,7 @@ export const getAll: ContentFetcher<ContentItemV2[], GetAllOptions> = async (
         throw new Error('Content API returned more items than the limit.');
 
       nextItems = pageTransform({
-        results,
+        data,
         pageIndex,
         offset,
         limit: pageLimit,
