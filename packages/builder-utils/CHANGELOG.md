@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.0](https://github.com/buildquick/buildquick/compare/builder-utils-0.4.3...builder-utils-0.5.0) (2023-04-25)
+
+### Dependency Updates
+
+* `builder-types` updated to version `1.3.2`
+
+### Features
+
+* **builder-utils:** add getContentApiUrl to fetcher options ([361fd62](https://github.com/buildquick/buildquick/commit/361fd62417fd64500e8fcfc21263c0e64a485925))
+* **builder-utils:** add offset and limit to pageTransform, rename page -> pageIndex ([b303745](https://github.com/buildquick/buildquick/commit/b303745b69f5541fd82eb43141414b0d88fb15ef))
+* **builder-utils:** change transform signature ([b4e521e](https://github.com/buildquick/buildquick/commit/b4e521eb9f830a8f30945b476282a3dc5b796a7e))
+* **builder-utils:** create parseHandlebars ([0dd1b60](https://github.com/buildquick/buildquick/commit/0dd1b603f43d903a5596c23386f06ffcb5d5003e))
+* **builder-utils:** pass full content API response to transforms ([8868e54](https://github.com/buildquick/buildquick/commit/8868e54caaa3593cf998d1de876d7e75463ce066))
+
 ### [0.4.3](https://github.com/buildquick/buildquick/compare/builder-utils-0.4.2...builder-utils-0.4.3) (2023-04-03)
 
 ### Dependency Updates
