@@ -43,10 +43,17 @@ type GetAllOptions = Omit<
   'limit' | 'transform'
 > & {
   pageLimit?: number;
-  pageTransform?: (
-    content: ContentItemV2[],
-    page: number
-  ) => Promise<ContentItemV2[]>;
+  pageTransform?: ({
+    results,
+    pageIndex,
+    offset,
+    limit,
+  }: {
+    results: ContentItemV2[];
+    pageIndex: number;
+    offset: number;
+    limit: number;
+  }) => Promise<ContentItemV2[]>;
 };
 
 // Max limit supported by Builder content API is 100.
@@ -224,13 +231,14 @@ export const getAll: ContentFetcher<ContentItemV2[], GetAllOptions> = async (
   options
 ) => {
   const pageLimit = options.pageLimit || BUILDER_MAX_LIMIT;
-  const defaultPageTransform: Transform<ContentItemV2[]> = async (results) =>
-    results;
+  const defaultPageTransform: GetAllOptions['pageTransform'] = async ({
+    results,
+  }) => results;
   const pageTransform = options.pageTransform || defaultPageTransform;
   let offset = 0;
   let nextItems: Promise<ContentItemV2[] | null>;
   let allItems: (typeof nextItems)[] = [];
-  let page = 0;
+  let pageIndex = 0;
   let fetchContent;
 
   do {
@@ -251,7 +259,12 @@ export const getAll: ContentFetcher<ContentItemV2[], GetAllOptions> = async (
       if (results.length > pageLimit)
         throw new Error('Content API returned more items than the limit.');
 
-      nextItems = pageTransform(results, page);
+      nextItems = pageTransform({
+        results,
+        pageIndex,
+        offset,
+        limit: pageLimit,
+      });
       allItems = (allItems || []).concat(nextItems);
     };
 
@@ -259,7 +272,7 @@ export const getAll: ContentFetcher<ContentItemV2[], GetAllOptions> = async (
     // maximum number of retries.
     await backoff(fetchContent, options.maxBackoff, options.maxTries);
     offset += pageLimit;
-    page++;
+    pageIndex++;
   } while (allItems.length === pageLimit);
 
   // Ensure that all transformations have been applied.
