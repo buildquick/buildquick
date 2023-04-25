@@ -12,7 +12,7 @@ type ValidateShape<T, Shape> = T extends Shape
     : never
   : never;
 
-type Transform<T> = (data: ContentApiResponseV2) => Promise<T>;
+type Transform<T> = ({ data }: { data: ContentApiResponseV2 }) => Promise<T>;
 
 type ContentFetcherOptions<T> = ContentApiOptions & {
   model: string;
@@ -202,26 +202,26 @@ const get: ContentFetcher<
 };
 
 export const getOne: ContentFetcher<ContentItemV2> = async (options) => {
-  const defaultTransform: Transform<ContentItemV2> = async (data) =>
+  const defaultTransform: Transform<ContentItemV2> = async ({ data }) =>
     data.results[0];
   const transform = options.transform ?? defaultTransform;
   const execute = async () => {
     const data = await get(options);
 
-    return await transform(data);
+    return await transform({ data });
   };
 
   return await backoff(execute, options.maxBackoff, options.maxTries);
 };
 
 export const getSome: ContentFetcher<ContentItemV2[]> = async (options) => {
-  const defaultTransform: Transform<ContentItemV2[]> = async (data) =>
+  const defaultTransform: Transform<ContentItemV2[]> = async ({ data }) =>
     data.results;
   const transform = options.transform ?? defaultTransform;
   const execute = async () => {
     const data = await get(options);
 
-    return await transform(data);
+    return await transform({ data });
   };
 
   return await backoff(execute, options.maxBackoff, options.maxTries);
