@@ -3,7 +3,7 @@ import {
   ContentApiOptions,
   ContentApiResponseV2,
 } from '@buildquick/builder-types';
-import { backoff } from './utils';
+import { backoff } from './backoff';
 import { QueryString } from '@builder.io/sdk/dist/src/classes/query-string.class';
 
 type ValidateShape<T, Shape> = T extends Shape
