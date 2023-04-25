@@ -1,4 +1,5 @@
+export * from './backoff';
 export * from './color';
 export * from './content-js';
 export * from './fetchers';
-export { backoff } from './backoff';
+export * from './parse-handlebars';
