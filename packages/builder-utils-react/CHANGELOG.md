@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.5.1](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.5.0...builder-utils-react-0.5.1) (2023-04-26)
+
+
+### Bug Fixes
+
+* **builder-utils-react:** missed capitalization for buildQuick ([e779f10](https://github.com/buildquick/buildquick/commit/e779f10f1a9fd8ba3f9d62ff2fc883566ed99491))
+
 ## [0.5.0](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.4.1...builder-utils-react-0.5.0) (2023-04-26)
 
 ### Dependency Updates
