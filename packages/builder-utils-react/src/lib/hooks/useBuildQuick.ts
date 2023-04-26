@@ -6,7 +6,7 @@ import {
   waitForRef,
 } from '@buildquick/builder-utils';
 
-export const useBuildquick = () => ({
+export const useBuildQuick = () => ({
   context: {
     buildquick: {
       utils: {
@@ -20,4 +20,4 @@ export const useBuildquick = () => ({
   },
 });
 
-export default useBuildquick;
+export default useBuildQuick;
