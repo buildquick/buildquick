@@ -8,7 +8,7 @@ import {
 
 export const useBuildQuick = () => ({
   context: {
-    buildquick: {
+    buildQuick: {
       utils: {
         parseHandlebars,
         rgbaToFilter,
