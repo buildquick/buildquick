@@ -171,11 +171,7 @@ const getApiOptions = <T>(
     { apiKey: options.apiKey }
   ) as ValidateShape<T, ContentApiOptions>;
 
-  return {
-    noTraverse: false,
-    includeRefs: true,
-    ...validOptions,
-  };
+  return validOptions;
 };
 
 const get: ContentFetcher<
