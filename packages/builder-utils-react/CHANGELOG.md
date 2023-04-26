@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.0](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.4.1...builder-utils-react-0.5.0) (2023-04-26)
+
+### Dependency Updates
+
+* `builder-types` updated to version `1.3.3`
+* `builder-utils` updated to version `1.0.1`
+
+### Features
+
+* **builder-utils-react:** add parseHandlebars to useBuildquick ([f97dcd4](https://github.com/buildquick/buildquick/commit/f97dcd463cf7fcdd99a8b1954007bfff10d6d1d4))
+
 ### [0.4.1](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.4.0...builder-utils-react-0.4.1) (2023-04-26)
 
 ### Dependency Updates
