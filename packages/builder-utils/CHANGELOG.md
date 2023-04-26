@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [1.0.2](https://github.com/buildquick/buildquick/compare/builder-utils-1.0.1...builder-utils-1.0.2) (2023-04-26)
+
+
+### Reverts
+
+* **builder-utils:** revert 'recurse refs and symbols by default' ([40aa5ee](https://github.com/buildquick/buildquick/commit/40aa5eef249bf4b84aa3bdf9b1f3582f8109518a))
+
 ### [1.0.1](https://github.com/buildquick/buildquick/compare/builder-utils-1.0.0...builder-utils-1.0.1) (2023-04-26)
 
 ### Dependency Updates
