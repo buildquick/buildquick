@@ -11,8 +11,8 @@
     }
   },
   "dependencies": {
-    "@buildquick/builder-types": "1.3.2",
-    "@buildquick/builder-utils": "0.5.0"
+    "@buildquick/builder-types": "1.x",
+    "@buildquick/builder-utils": "1.x"
   },
   "peerDependencies": {
     "@builder.io/react": "2",
