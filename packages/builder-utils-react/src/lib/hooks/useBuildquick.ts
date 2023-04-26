@@ -1,4 +1,5 @@
 import {
+  parseHandlebars,
   rgbaToFilter,
   waitForElement,
   waitForElements,
@@ -9,6 +10,7 @@ export const useBuildquick = () => ({
   context: {
     buildquick: {
       utils: {
+        parseHandlebars,
         rgbaToFilter,
         waitForElement,
         waitForElements,
