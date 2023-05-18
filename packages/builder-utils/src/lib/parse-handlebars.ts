@@ -1,21 +1,29 @@
+import { get } from './get';
+
 export const parseHandlebars = (
-  template: string,
+  template: string | (() => string),
   data: Record<string, string>
 ) => {
-  const regex = /{{\s*(\w+)\s*}}/g;
-  let parsedTemplate = template;
+  // Check if the template is a string or a function
+  template = typeof template === 'function' ? template() : template;
+  if (['string', 'number'].indexOf(typeof template) === -1)
+    throw 'PlaceholdersJS: please provide a valid template';
 
-  let match;
-  while ((match = regex.exec(template)) !== null) {
-    const variableName = match[1];
-    const value = data[variableName];
+  // If no data, return template as-is
+  if (!data) return template;
 
-    if (value !== undefined) {
-      parsedTemplate = parsedTemplate.replace(match[0], value);
-    } else {
-      console.warn(`Variable "${variableName}" not found in data object.`);
-    }
-  }
+  // Replace our curly braces with data
+  template = template.replace(/\{\{([^}]+)\}\}/g, function (match) {
+    // Remove the wrapping curly braces
+    match = match.slice(2, -2);
 
-  return parsedTemplate;
+    // Get the value
+    const val = get(data, match.trim());
+
+    // Replace
+    if (!val) return '{{' + match + '}}';
+    return val;
+  });
+
+  return template;
 };
