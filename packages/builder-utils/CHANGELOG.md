@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.1.0](https://github.com/buildquick/buildquick/compare/builder-utils-1.0.2...builder-utils-1.1.0) (2023-05-18)
+
+
+### Features
+
+* **builder-utils:** allow nested properties and template functions in parseHandlebars ([7f3ca0e](https://github.com/buildquick/buildquick/commit/7f3ca0e6ff957b432161ddc01adf762b0eb0600c))
+
 ### [1.0.2](https://github.com/buildquick/buildquick/compare/builder-utils-1.0.1...builder-utils-1.0.2) (2023-04-26)
 
 
