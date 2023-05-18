@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.2.0](https://github.com/buildquick/buildquick/compare/builder-utils-1.1.0...builder-utils-1.2.0) (2023-05-18)
+
+
+### Features
+
+* **builder-utils:** add ability to filter handlebars values ([2c0d754](https://github.com/buildquick/buildquick/commit/2c0d75441d783054483287fc59215089bda86403))
+
 ## [1.1.0](https://github.com/buildquick/buildquick/compare/builder-utils-1.0.2...builder-utils-1.1.0) (2023-05-18)
 
 
