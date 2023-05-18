@@ -35,7 +35,7 @@ const filter = (
 
 export const parseHandlebars = (
   template: string | (() => string),
-  data: Record<string, string>,
+  data: Record<string, unknown>,
   filters: Record<string, Filter> = {}
 ) => {
   // Check if the template is a string or a function
