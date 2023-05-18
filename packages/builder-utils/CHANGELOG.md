@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [1.2.1](https://github.com/buildquick/buildquick/compare/builder-utils-1.2.0...builder-utils-1.2.1) (2023-05-18)
+
+
+### Bug Fixes
+
+* **builder-utils:** parseHandlebars type ([777e6a4](https://github.com/buildquick/buildquick/commit/777e6a4b708ffd5f19826dd3ca698787aec24ba1))
+
 ## [1.2.0](https://github.com/buildquick/buildquick/compare/builder-utils-1.1.0...builder-utils-1.2.0) (2023-05-18)
 
 
