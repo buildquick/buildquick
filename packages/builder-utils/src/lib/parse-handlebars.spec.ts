@@ -15,6 +15,11 @@ describe('parseHandlebars', () => {
       'Hello, Earth'
     );
   });
+
+  it('should return an empty string for an invalid reference', () => {
+    expect(parseHandlebars('Hello, {{worl}}', data)).toStrictEqual('Hello, ');
+  });
+
   it('should work with filters', () => {
     expect(
       parseHandlebars('Hello, {{world | toLowerCase}}', data, filters)

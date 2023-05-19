@@ -16,8 +16,13 @@ const filter = (
   const [currentValueFilter, ...remainingValueFilters] = valueFilters;
   const currentFilter = filters[currentValueFilter];
 
-  if (!isFilter(currentFilter))
-    throw `Missing or invalid filter provided in template while processing {{${match}}}: ${currentValueFilter}`;
+  if (!isFilter(currentFilter)) {
+    console.error(
+      `Missing or invalid filter provided in template while processing {{${match}}}: ${currentValueFilter}`
+    );
+
+    return value;
+  }
 
   let newValue;
 
@@ -25,9 +30,10 @@ const filter = (
     newValue = currentFilter(value);
   } catch (e) {
     console.error(
-      `Error while processing {{${match}}} in template. This filter failed: ${currentFilter}`
+      `Error while processing {{${match}}} in template. This filter failed: ${currentFilter}`,
+      (e as Error)?.stack
     );
-    throw e;
+    return value;
   }
 
   return filter(filters, newValue, remainingValueFilters, match);
@@ -61,7 +67,7 @@ export const parseHandlebars = (
     const val = filter(filters, get(data, path), valueFilters, match);
 
     // Replace
-    if (!val) return '{{' + match + '}}';
+    if (!val) return '';
     return val.toString();
   });
 
