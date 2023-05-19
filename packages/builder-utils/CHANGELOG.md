@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [1.2.2](https://github.com/buildquick/buildquick/compare/builder-utils-1.2.1...builder-utils-1.2.2) (2023-05-19)
+
+
+### Bug Fixes
+
+* **builder-utils:** return blank string and don't throw errors ([a32abaf](https://github.com/buildquick/buildquick/commit/a32abaf08a008ed05cdc6da3c2a8f7ed87271ec9))
+
 ### [1.2.1](https://github.com/buildquick/buildquick/compare/builder-utils-1.2.0...builder-utils-1.2.1) (2023-05-18)
 
 
