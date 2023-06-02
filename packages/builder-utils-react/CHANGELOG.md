@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.5.2](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.5.1...builder-utils-react-0.5.2) (2023-06-02)
+
+### Dependency Updates
+
+* `builder-utils` updated to version `1.2.3`
+
+### Bug Fixes
+
+* **builder-utils-react:** use new waitForRefElement ([8c16424](https://github.com/buildquick/buildquick/commit/8c16424fc9c42378f11ba05517b8b7ba3f68883f))
+
 ### [0.5.1](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.5.0...builder-utils-react-0.5.1) (2023-04-26)
 
 
