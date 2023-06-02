@@ -55,8 +55,11 @@ export const waitForElement = (
   });
 };
 
-export const waitForRef = async (callback: (ref: HTMLElement) => void) => {
-  if (Builder.isBrowser) {
+export const waitForRefElement = (
+  callback: (refElement: HTMLElement, ref: any) => void,
+  ref: any
+) => {
+  if (ref) {
     if (!ref.ref && !Object.getOwnPropertyDescriptor(ref, 'ref')?.get) {
       Object.defineProperty(ref, 'ref', {
         get: function () {
@@ -64,11 +67,13 @@ export const waitForRef = async (callback: (ref: HTMLElement) => void) => {
         },
         set: function (value) {
           this._ref = value;
-          callback(value);
+          callback(value, ref);
         },
       });
     } else if (ref.ref) {
-      callback(ref.ref);
+      callback(ref.ref, ref);
     }
+  } else {
+    console.error(`waitForRefRef requires a ref. Recieved: ${ref}`);
   }
 };

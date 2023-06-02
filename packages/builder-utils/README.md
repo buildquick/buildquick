@@ -129,7 +129,7 @@ context.parseHandlebars(state.text, {
 })
 ```
 
-### waitForRef
+### waitForRefElement
 
 Waits for `ref.ref`, the DOM node that your Builder content is rendered into, to become available.
 
@@ -138,19 +138,30 @@ Use case: an advanced use case for Builder content JS is to manipulate content t
 By waiting for the content's ref to become available, you can guarantee that the DOM nodes for your content item have been created and that you can query them successfully.
 
 ```js
-import { waitForRef } from '@buildquick/builder-utils'
+import { waitForRefElement } from '@buildquick/builder-utils'
 
 // Pass waitForRef to Builder content using context.
 // Using the React SDK, for example:
 
-<BuilderComponent model="your-model" context={{ parseHandlebars }} />
+<BuilderComponent model="your-model" context={{ waitForRefElement }} />
 
 // In your content JS:
 
 if (Builder.isBrowser) {
-  context.waitForRef((ref) => {
-    // ...some DOM manipulation of your content...
-  })
+  context.waitForRefElement(
+    // Callback provides two parameters:
+    //   1. refRef: The content item's DOM node (ref.ref)
+    //   2. ref: The content item's rendering component (ref)
+    // The callback can optionally be async and waitForRefElement will await it.
+    async (refRef, ref) => {
+      // Some DOM manipulation of your content...
+      doSomething(refRef.querySelector('.my-content'));
+      // ...or, use waitForElement(s) (see below).
+      doSomething(await context.waitForElement('.my-content', refRef));
+    },
+    // Pass in the content JS ref to monitor for ref.ref.
+    ref
+  )
 }
 ```
 
@@ -165,12 +176,12 @@ Use case: as with `waitForRef`, you may occasionally want to directly manipulate
 You can use `waitforElement`/`waitForElements` to ensure that the required DOM nodes are available before operating on them.
 
 ```js
-import { waitForRef } from '@buildquick/builder-utils'
+import { waitForElement, waitForElements } from '@buildquick/builder-utils'
 
 // Pass waitForRef to Builder content using context.
 // Using the React SDK, for example:
 
-<BuilderComponent model="your-model" context={{ parseHandlebars }} />
+<BuilderComponent model="your-model" context={{ waitForElement, waitForElements }} />
 
 // In your content JS:
 
@@ -178,9 +189,9 @@ if (Builder.isBrowser) {
   // Finds the first instance of 'my-content' that renders on the page...
   doSomething(await context.waitForElement('.my-content'));
 
-  // ...or, scope your query to your current content item.
-  context.waitForRef(async (ref) => {
-    doSomething(await context.waitForElement('.my-content', ref));
-  })
+  // ...or, scope your query to your current content item (see above).
+  context.waitForRefElement(async (refRef) => {
+    doSomething(await context.waitForElement('.my-content', refRef));
+  }, ref);
 }
 ```
