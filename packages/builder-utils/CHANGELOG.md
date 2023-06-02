@@ -2,6 +2,14 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [1.2.3](https://github.com/buildquick/buildquick/compare/builder-utils-1.2.2...builder-utils-1.2.3) (2023-06-02)
+
+
+### Bug Fixes
+
+* **builder-utils:** parseHandlebars error message ([71ba71d](https://github.com/buildquick/buildquick/commit/71ba71db297719399b12c80a75fa7d8bb568d36b))
+* **builder-utils:** replace waitForRef with fixed waitForRefElement ([c7232ab](https://github.com/buildquick/buildquick/commit/c7232ab1c342075213953ed047106016c99975db))
+
 ### [1.2.2](https://github.com/buildquick/buildquick/compare/builder-utils-1.2.1...builder-utils-1.2.2) (2023-05-19)
 
 
