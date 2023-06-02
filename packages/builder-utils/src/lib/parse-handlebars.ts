@@ -30,7 +30,7 @@ const filter = (
     newValue = currentFilter(value);
   } catch (e) {
     console.error(
-      `Error while processing {{${match}}} in template. This filter failed: ${currentFilter}`,
+      `Error while processing {{${match}}} in template. This filter failed: ${currentValueFilter}`,
       (e as Error)?.stack
     );
     return value;
