@@ -129,39 +129,38 @@ context.parseHandlebars(state.text, {
 })
 ```
 
-### waitForRefElement
+### getComponentElement
 
-Waits for `ref.ref`, the DOM node that your Builder content is rendered into, to become available.
+Waits for the DOM node that your Builder content is rendered into to become available.
 
 Use case: an advanced use case for Builder content JS is to manipulate content through its DOM nodes. However, when rendering lots of Builder content on a page, the browser sometimes executes content JS before the DOM nodes for the content have rendered, meaning that calls to `document.querySelector`/`document.querySelectorAll` will fail.
 
-By waiting for the content's ref to become available, you can guarantee that the DOM nodes for your content item have been created and that you can query them successfully.
+By waiting for the render node to become available, you can guarantee that the DOM nodes for your content item have been created and that you can query them successfully.
 
 ```js
-import { waitForRefElement } from '@buildquick/builder-utils'
+import { getComponentElement } from '@buildquick/builder-utils'
 
-// Pass waitForRef to Builder content using context.
+// Pass getComponentElement to Builder content using context.
 // Using the React SDK, for example:
 
-<BuilderComponent model="your-model" context={{ waitForRefElement }} />
+<BuilderComponent model="your-model" context={{ getComponentElement }} />
 
 // In your content JS:
 
 if (Builder.isBrowser) {
-  context.waitForRefElement(
-    // Callback provides two parameters:
-    //   1. refRef: The content item's DOM node (ref.ref)
-    //   2. ref: The content item's rendering component (ref)
-    // The callback can optionally be async and waitForRefElement will await it.
-    async (refRef, ref) => {
-      // Some DOM manipulation of your content...
-      doSomething(refRef.querySelector('.my-content'));
-      // ...or, use waitForElement(s) (see below).
-      doSomething(await context.waitForElement('.my-content', refRef));
-    },
-    // Pass in the content JS ref to monitor for ref.ref.
-    ref
-  )
+  // Pass in your component, made available in content JS
+  // using the ref variable.
+  const {
+    /* The render node for the content item. */
+    element,
+    /* An updated version of ref, in case you have a stale
+       ref within a closure. Usually not needed. **/
+    // ref
+  } = await context.getComponentElement(ref);
+
+  doSomething(element.querySelector('.my-content'));
+  // ...or, use waitForElement(s) (see below).
+  doSomething(await context.waitForElement('.my-content', element));
 }
 ```
 
@@ -178,7 +177,7 @@ You can use `waitforElement`/`waitForElements` to ensure that the required DOM n
 ```js
 import { waitForElement, waitForElements } from '@buildquick/builder-utils'
 
-// Pass waitForRef to Builder content using context.
+// Pass waitForElement(s) to Builder content using context.
 // Using the React SDK, for example:
 
 <BuilderComponent model="your-model" context={{ waitForElement, waitForElements }} />
@@ -190,8 +189,9 @@ if (Builder.isBrowser) {
   doSomething(await context.waitForElement('.my-content'));
 
   // ...or, scope your query to your current content item (see above).
-  context.waitForRefElement(async (refRef) => {
-    doSomething(await context.waitForElement('.my-content', refRef));
-  }, ref);
+  // NOTE: Make sure to pass in getComponentElement through context.
+  const { element } = await context.getComponentElement(ref);
+
+  doSomething(await context.waitForElement('.my-content', element));
 }
 ```
