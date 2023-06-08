@@ -4,7 +4,7 @@
   "type": "module",
   "main": "./index.js",
   "dependencies": {
-    "@buildquick/builder-types": ">=1.3.4"
+    "@buildquick/builder-types": ">= 1.4.0"
   },
   "peerDependencies": {
     "@builder.io/sdk": "^1.1.25"
