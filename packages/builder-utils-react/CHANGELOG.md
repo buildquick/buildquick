@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.6.0](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.5.2...builder-utils-react-0.6.0) (2023-06-08)
+
+### Dependency Updates
+
+* `builder-types` updated to version `1.3.4`
+* `builder-utils` updated to version `1.4.0`
+
+### Features
+
+* **builder-utils-react:** update waitForRefElement -> getComponentElement ([c4b4873](https://github.com/buildquick/buildquick/commit/c4b4873ec8969abc906e475bebaabc3d1558cd38))
+
 ### [0.5.2](https://github.com/buildquick/buildquick/compare/builder-utils-react-0.5.1...builder-utils-react-0.5.2) (2023-06-02)
 
 ### Dependency Updates

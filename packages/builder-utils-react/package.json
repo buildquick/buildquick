@@ -1,6 +1,6 @@
 {
   "name": "@buildquick/builder-utils-react",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "main": "./index.js",
   "type": "module",
   "types": "./index.d.ts",
