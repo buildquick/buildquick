@@ -2,6 +2,22 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.5.0](https://github.com/buildquick/buildquick/compare/builder-utils-1.4.0...builder-utils-1.5.0) (2023-06-08)
+
+### Dependency Updates
+
+* `builder-types` updated to version `1.4.0`
+
+### Features
+
+* **builder-utils:** accept data prop in fetchers ([af9a915](https://github.com/buildquick/buildquick/commit/af9a915917f43d2c25c2d97cdcf78183a4bc5650))
+* **builder-utils:** allow getOne to return null ([712d5c9](https://github.com/buildquick/buildquick/commit/712d5c9228719a51730b6d49fbb12df3e0c68fcd))
+
+
+### Bug Fixes
+
+* **builder-utils:** remove top-level this from getComponentElement ([6480d08](https://github.com/buildquick/buildquick/commit/6480d084412c79bb9314c0c9fc98199f22ca2025))
+
 ## [1.4.0](https://github.com/buildquick/buildquick/compare/builder-utils-1.3.0...builder-utils-1.4.0) (2023-06-08)
 
 
