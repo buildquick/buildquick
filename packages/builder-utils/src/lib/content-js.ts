@@ -69,7 +69,7 @@ export const getComponentElement = (
           },
         });
       } else if (component.ref) {
-        resolve({ element: component.ref, ref: this });
+        resolve({ element: component.ref, ref: component });
       }
     } else {
       console.error(
