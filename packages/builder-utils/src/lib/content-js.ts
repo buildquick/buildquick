@@ -1,8 +1,3 @@
-import { Builder } from '@builder.io/sdk';
-import { ContentJsRef } from '@buildquick/builder-types';
-
-declare const ref: ContentJsRef;
-
 export const waitForElements = (
   selector: string,
   root: HTMLElement = document.documentElement
@@ -55,25 +50,31 @@ export const waitForElement = (
   });
 };
 
-export const waitForRefElement = (
-  callback: (refElement: HTMLElement, ref: any) => void,
-  ref: any
-) => {
-  if (ref) {
-    if (!ref.ref && !Object.getOwnPropertyDescriptor(ref, 'ref')?.get) {
-      Object.defineProperty(ref, 'ref', {
-        get: function () {
-          return this._ref;
-        },
-        set: function (value) {
-          this._ref = value;
-          callback(value, ref);
-        },
-      });
-    } else if (ref.ref) {
-      callback(ref.ref, ref);
+export const getComponentElement = (
+  component: any
+): Promise<{ element: HTMLElement; component: any }> => {
+  return new Promise((resolve) => {
+    if (component) {
+      if (
+        !component.ref &&
+        !Object.getOwnPropertyDescriptor(component, 'ref')?.get
+      ) {
+        Object.defineProperty(component, 'ref', {
+          get: function () {
+            return this._ref;
+          },
+          set: function (element) {
+            this._ref = element;
+            resolve({ element, component: this });
+          },
+        });
+      } else if (component.ref) {
+        resolve({ element: component.ref, component: this });
+      }
+    } else {
+      console.error(
+        `getComponentElement requires a component. Recieved: ${component}`
+      );
     }
-  } else {
-    console.error(`waitForRefRef requires a ref. Recieved: ${ref}`);
-  }
+  });
 };
