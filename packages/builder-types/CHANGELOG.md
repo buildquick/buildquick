@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.4.0](https://github.com/buildquick/buildquick/compare/builder-types-1.3.4...builder-types-1.4.0) (2023-06-08)
+
+
+### Features
+
+* **builder-types:** add data to API options ([dcb2ae1](https://github.com/buildquick/buildquick/commit/dcb2ae174cf939073265438b1609f4f04895f5e3))
+
 ### [1.3.4](https://github.com/buildquick/buildquick/compare/builder-types-1.3.3...builder-types-1.3.4) (2023-06-08)
 
 
