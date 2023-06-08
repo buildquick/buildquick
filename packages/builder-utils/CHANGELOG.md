@@ -2,6 +2,14 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.4.0](https://github.com/buildquick/buildquick/compare/builder-utils-1.3.0...builder-utils-1.4.0) (2023-06-08)
+
+
+### Features
+
+* **builder-utils:** change waitForRefElement -> getComponentElement ([a2b8d9e](https://github.com/buildquick/buildquick/commit/a2b8d9e1bb5e23ba14f2c9ea0dc8572c2bf82f7d))
+* **builder-utils:** update getComponentElement signature to return ref ([5407c95](https://github.com/buildquick/buildquick/commit/5407c95a075e174b98e7deb73b5e7958e6c07d22))
+
 ## [1.3.0](https://github.com/buildquick/buildquick/compare/builder-utils-1.2.3...builder-utils-1.3.0) (2023-06-08)
 
 ### Dependency Updates
