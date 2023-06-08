@@ -3,7 +3,7 @@ import {
   rgbaToFilter,
   waitForElement,
   waitForElements,
-  waitForRefElement,
+  getComponentElement,
 } from '@buildquick/builder-utils';
 
 export const useBuildQuick = () => ({
@@ -14,7 +14,7 @@ export const useBuildQuick = () => ({
         rgbaToFilter,
         waitForElement,
         waitForElements,
-        waitForRefElement,
+        getComponentElement,
       },
     },
   },
