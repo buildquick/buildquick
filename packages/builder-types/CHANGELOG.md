@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [1.3.4](https://github.com/buildquick/buildquick/compare/builder-types-1.3.3...builder-types-1.3.4) (2023-06-08)
+
+
+### Bug Fixes
+
+* **builder-types:** update v3 API types ([a113ff4](https://github.com/buildquick/buildquick/commit/a113ff478c02fd3776a92eb6604f46249d36a3a9))
+
 ### [1.3.3](https://github.com/buildquick/buildquick/compare/builder-types-1.3.2...builder-types-1.3.3) (2023-04-26)
 
 ### [1.3.2](https://github.com/buildquick/buildquick/compare/builder-types-1.3.1...builder-types-1.3.2) (2023-04-04)
