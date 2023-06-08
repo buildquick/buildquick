@@ -128,6 +128,7 @@ const getApiOptions = <T>(
     'noTargeting',
     'includeUnpublished',
     'sort',
+    'data',
   ];
 
   const isValidRequiredProp = (prop: RequiredProperties) =>
