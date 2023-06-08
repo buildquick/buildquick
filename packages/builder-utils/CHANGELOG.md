@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.3.0](https://github.com/buildquick/buildquick/compare/builder-utils-1.2.3...builder-utils-1.3.0) (2023-06-08)
+
+### Dependency Updates
+
+* `builder-types` updated to version `1.3.4`
+
+### Features
+
+* **builder-utils:** use v3 API for fetchers ([52a3177](https://github.com/buildquick/buildquick/commit/52a3177a11c7d4710541f4ef352cffe9640577c7))
+
 ### [1.2.3](https://github.com/buildquick/buildquick/compare/builder-utils-1.2.2...builder-utils-1.2.3) (2023-06-02)
 
 
