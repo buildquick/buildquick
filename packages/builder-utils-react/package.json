@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@buildquick/builder-types": "1.x",
-    "@buildquick/builder-utils": ">= 1.2.3"
+    "@buildquick/builder-utils": ">= 1.4.0"
   },
   "peerDependencies": {
     "@builder.io/react": "2",
