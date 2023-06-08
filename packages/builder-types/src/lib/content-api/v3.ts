@@ -34,7 +34,7 @@ export interface ContentItemV3<SchemaData = DefaultSchemaDataV3>
     >,
     'data' | 'meta'
   > {
-  data: Omit<ContentItemData<ReferenceV3, BlockV3, SchemaData>, 'url'>;
+  data: ContentItemData<ReferenceV3, BlockV3, SchemaData>;
   lastUpdateBy?: null;
   meta: Omit<
     ContentItemBase<
