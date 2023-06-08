@@ -52,7 +52,7 @@ export const waitForElement = (
 
 export const getComponentElement = (
   component: any
-): Promise<{ element: HTMLElement; component: any }> => {
+): Promise<{ element: HTMLElement; ref: any }> => {
   return new Promise((resolve) => {
     if (component) {
       if (
@@ -65,11 +65,11 @@ export const getComponentElement = (
           },
           set: function (element) {
             this._ref = element;
-            resolve({ element, component: this });
+            resolve({ element, ref: this });
           },
         });
       } else if (component.ref) {
-        resolve({ element: component.ref, component: this });
+        resolve({ element: component.ref, ref: this });
       }
     } else {
       console.error(
