@@ -154,4 +154,5 @@ export type ContentApiOptions = {
   noTargeting?: boolean;
   includeUnpublished?: boolean;
   sort?: Record<string, object | string | number>;
+  data?: Record<string, object | string | number>;
 };
