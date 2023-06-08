@@ -1,7 +1,7 @@
 import {
-  ContentItemV2,
+  ContentItemV3,
   ContentApiOptions,
-  ContentApiResponseV2,
+  ContentApiResponseV3,
 } from '@buildquick/builder-types';
 import { backoff } from './backoff';
 import { QueryString } from '@builder.io/sdk/dist/src/classes/query-string.class';
@@ -12,7 +12,7 @@ type ValidateShape<T, Shape> = T extends Shape
     : never
   : never;
 
-type Transform<T> = ({ data }: { data: ContentApiResponseV2 }) => Promise<T>;
+type Transform<T> = ({ data }: { data: ContentApiResponseV3 }) => Promise<T>;
 
 type ContentFetcherOptions<T> = ContentApiOptions & {
   model: string;
@@ -39,7 +39,7 @@ type ContentFetcher<T, O = ContentFetcherOptions<T>> = (
 ) => Promise<T>;
 
 type GetAllOptions = Omit<
-  ContentFetcherOptions<ContentItemV2[]>,
+  ContentFetcherOptions<ContentItemV3[]>,
   'limit' | 'transform'
 > & {
   pageLimit?: number;
@@ -49,17 +49,17 @@ type GetAllOptions = Omit<
     offset,
     limit,
   }: {
-    data: ContentApiResponseV2;
+    data: ContentApiResponseV3;
     pageIndex: number;
     offset: number;
     limit: number;
-  }) => Promise<ContentItemV2[]>;
+  }) => Promise<ContentItemV3[]>;
 };
 
 // Max limit supported by Builder content API is 100.
 const BUILDER_MAX_LIMIT = 100;
 
-export const createContentApiV2Url = async (
+export const createContentApiV3Url = async (
   options: ContentApiOptions &
     Pick<
       ContentFetcherOptions<never>,
@@ -68,7 +68,7 @@ export const createContentApiV2Url = async (
 ) => {
   const apiOptions = getApiOptions(options);
   const query = QueryString.stringifyDeep(apiOptions);
-  let url = `https://cdn.builder.io/api/v2/content/${options.model}?${query}`;
+  let url = `https://cdn.builder.io/api/v3/content/${options.model}?${query}`;
 
   // Override the default content API URL (for example, when proxying the content API).
   if (options.getContentApiUrl) {
@@ -175,10 +175,10 @@ const getApiOptions = <T>(
 };
 
 const get: ContentFetcher<
-  ContentApiResponseV2,
-  ContentFetcherOptions<ContentItemV2 | ContentItemV2[]>
+  ContentApiResponseV3,
+  ContentFetcherOptions<ContentItemV3 | ContentItemV3[]>
 > = async (options) => {
-  const url = await createContentApiV2Url(options);
+  const url = await createContentApiV3Url(options);
   const init = options.fetchOptions ?? {};
 
   if (
@@ -192,13 +192,13 @@ const get: ContentFetcher<
   }
 
   const res = await fetch(url, init);
-  const data: ContentApiResponseV2 = await res.json();
+  const data: ContentApiResponseV3 = await res.json();
 
   return data || null;
 };
 
-export const getOne: ContentFetcher<ContentItemV2> = async (options) => {
-  const defaultTransform: Transform<ContentItemV2> = async ({ data }) =>
+export const getOne: ContentFetcher<ContentItemV3> = async (options) => {
+  const defaultTransform: Transform<ContentItemV3> = async ({ data }) =>
     data.results[0];
   const transform = options.transform ?? defaultTransform;
   const execute = async () => {
@@ -210,8 +210,8 @@ export const getOne: ContentFetcher<ContentItemV2> = async (options) => {
   return await backoff(execute, options.maxBackoff, options.maxTries);
 };
 
-export const getSome: ContentFetcher<ContentItemV2[]> = async (options) => {
-  const defaultTransform: Transform<ContentItemV2[]> = async ({ data }) =>
+export const getSome: ContentFetcher<ContentItemV3[]> = async (options) => {
+  const defaultTransform: Transform<ContentItemV3[]> = async ({ data }) =>
     data.results;
   const transform = options.transform ?? defaultTransform;
   const execute = async () => {
@@ -223,7 +223,7 @@ export const getSome: ContentFetcher<ContentItemV2[]> = async (options) => {
   return await backoff(execute, options.maxBackoff, options.maxTries);
 };
 
-export const getAll: ContentFetcher<ContentItemV2[], GetAllOptions> = async (
+export const getAll: ContentFetcher<ContentItemV3[], GetAllOptions> = async (
   options
 ) => {
   const pageLimit = options.pageLimit || BUILDER_MAX_LIMIT;
@@ -232,7 +232,7 @@ export const getAll: ContentFetcher<ContentItemV2[], GetAllOptions> = async (
   }) => data.results;
   const pageTransform = options.pageTransform || defaultPageTransform;
   let offset = 0;
-  let nextItems: Promise<ContentItemV2[] | null>;
+  let nextItems: Promise<ContentItemV3[] | null>;
   let allItems: (typeof nextItems)[] = [];
   let pageIndex = 0;
   let fetchContent;
@@ -275,10 +275,10 @@ export const getAll: ContentFetcher<ContentItemV2[], GetAllOptions> = async (
   // Ensure that all transformations have been applied.
   return (await Promise.all(allItems))
     .flat()
-    .filter<ContentItemV2>((item): item is ContentItemV2 => !!item);
+    .filter<ContentItemV3>((item): item is ContentItemV3 => !!item);
 };
 
-export const getUrlPathsFromContentItem = (content: ContentItemV2) => {
+export const getUrlPathsFromContentItem = (content: ContentItemV3) => {
   if (Array.isArray(content.data.url)) return content.data.url;
   return [content.data.url];
 };
