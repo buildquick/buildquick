@@ -177,7 +177,7 @@ const getApiOptions = <T>(
 
 const get: ContentFetcher<
   ContentApiResponseV3,
-  ContentFetcherOptions<ContentItemV3 | ContentItemV3[]>
+  ContentFetcherOptions<ContentItemV3 | ContentItemV3[] | null>
 > = async (options) => {
   const url = await createContentApiV3Url(options);
   const init = options.fetchOptions ?? {};
@@ -195,17 +195,19 @@ const get: ContentFetcher<
   const res = await fetch(url, init);
   const data: ContentApiResponseV3 = await res.json();
 
-  return data || null;
+  return data;
 };
 
-export const getOne: ContentFetcher<ContentItemV3> = async (options) => {
-  const defaultTransform: Transform<ContentItemV3> = async ({ data }) =>
-    data.results[0];
+export const getOne: ContentFetcher<ContentItemV3 | null> = async (options) => {
+  const defaultTransform: Transform<ContentItemV3 | null> = async ({ data }) =>
+    data.results[0] || null;
   const transform = options.transform ?? defaultTransform;
   const execute = async () => {
     const data = await get(options);
 
-    return await transform({ data });
+    if (data.results.length === 0) return null;
+
+    return (await transform({ data })) || null;
   };
 
   return await backoff(execute, options.maxBackoff, options.maxTries);
